@@ -1,0 +1,36 @@
+Initialize engine version: 5.6.2f1 (a2913c821e27)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon HD 7900 Series (ID=0x679a)
+    Vendor:   ATI
+    VRAM:     3050 MB
+    Driver:   21.19.384.0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.018 seconds
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Anthony\workspace\Unity_games\Proto 2d Fighter\Builds\Build_1_2\Build_1_2_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.749269 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 5.562947 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 278.
+Total: 4.328648 ms (FindLiveObjects: 0.022941 ms CreateObjectMapping: 0.019017 ms MarkObjects: 0.163909 ms  DeleteObjects: 4.121272 ms)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 444 -> priority: 1 
+  Thread -> id: 2168 -> priority: 1 
