@@ -6,16 +6,23 @@ public class PlayerController : MonoBehaviour {
 
     public float moveSpeed;
     public float jumpForce;
+    public float fireRate;
+
+    private float nextFire;
 
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
     public KeyCode throwIce;
+    public Transform AttackSpawn;
+    public GameObject iceBolt;
+
 
 
     private Rigidbody2D theRB;
     private Animator tor;
     private Animation tion;
+
 
 	// Use this for initialization
 	void Start () {
@@ -25,15 +32,27 @@ public class PlayerController : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+    void Update ()
+    {
+        if (Input.GetKey(throwIce) && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(iceBolt, AttackSpawn.position, AttackSpawn.rotation);
+        }
+    }
+
+    //FixedUpdate is used instead of update b/c you use
+    //FixedUpdate to update physics
+    void FixedUpdate()
+    {
         if (Input.GetKey(left))
         {
             theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
-            transform.localRotation = Quaternion.Euler(180, 0, 180);
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
             tor.SetBool("Walking", true);
             //tion.Stop("subZero_idle");
             //tion.Play("subZero_walking");
-           // ani.SetBool("subZero_walking", true);
+            // ani.SetBool("subZero_walking", true);
         }
         else if (Input.GetKey(right))
         {
@@ -53,9 +72,10 @@ public class PlayerController : MonoBehaviour {
 
         }
 
+
         if (Input.GetKeyDown(jump))
         {
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
         }
-	}
+    }
 }
