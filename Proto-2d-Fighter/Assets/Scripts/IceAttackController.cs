@@ -9,19 +9,21 @@ public class IceAttackController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //Gets the object(Usually an Iceball) and applies velocity to it making it move 
         rb = GetComponent<Rigidbody2D>();
-        //rb.AddForce(transform.up * speed * 10);
-        //rb.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
-
         rb.velocity = transform.right * speed;
+	}
 
-       /* if (player.transform.rotation.y == 0)
-        {xc 
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+
+        if (coll.gameObject.tag == "Player")
+        {
+            coll.gameObject.SendMessage("TakeDamage", 10);
+            DestroyObject(this.gameObject);
         }
         else
-        {
-           // rb.velocity = transform. * speed;
-        }*/
-	}
-	
+            Debug.Log(gameObject.tag);
+
+    }
 }
