@@ -34,42 +34,43 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
     void Update ()
     {
-        if (Input.GetKey(throwIce) && Time.time > nextFire)
+        if (tor.GetBool("Dead") == true)
+        {
+            return;
+        }
+        else if (Input.GetKey(throwIce) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(iceBolt, AttackSpawn.position, AttackSpawn.rotation);
+            tor.SetBool("Attack_IB", true);
         }
+        
     }
 
     //FixedUpdate is used instead of update b/c you use
     //FixedUpdate to update physics
     void FixedUpdate()
     {
-        if (Input.GetKey(left))
+        if (tor.GetBool("Dead") == true)
         {
+            return;
+        }else if (Input.GetKey(left))
+        {
+
             theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
             transform.localRotation = Quaternion.Euler(0, 180, 0);
             tor.SetBool("Walking", true);
-            //tion.Stop("subZero_idle");
-            //tion.Play("subZero_walking");
-            // ani.SetBool("subZero_walking", true);
         }
         else if (Input.GetKey(right))
         {
             theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);
             transform.localRotation = Quaternion.Euler(0, 0, 0);
             tor.SetBool("Walking", true);
-            //tion.Stop("subZero_idle");
-            //tion.Play("subZero_walking");
-            //ani.SetBool("subZero_walking", true);
         }
         else
         {
             theRB.velocity = new Vector2(0, theRB.velocity.y);
             tor.SetBool("Walking", false);
-            //tion.Stop("subZero_walking");
-            //tion.Play("subZero_idle");
-
         }
 
 

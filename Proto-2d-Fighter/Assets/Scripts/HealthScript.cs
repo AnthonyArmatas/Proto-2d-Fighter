@@ -11,11 +11,14 @@ public class HealthScript : MonoBehaviour {
 
     private float hitPoints = 150;
     private float maxHitPoints = 150;
+    private Animator tor;
+
 
 	// Use this for initialization
     private void Start()
     {
-		
+        tor = GetComponent<Animator>();
+
 	}
 	
 	// Update is called once per frame
@@ -30,10 +33,14 @@ public class HealthScript : MonoBehaviour {
     private void TakeDamage(float damage)
     {
         hitPoints -= damage;
+        if (hitPoints == 0)
+        {
+            tor.SetBool("Dead", true);
+            Debug.Log("Dead!");
+        }
         if (hitPoints < 0)
         {
             hitPoints = 0;
-            Debug.Log("Dead!");
         }
         UpdateHealthBar();
     }
