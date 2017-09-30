@@ -23,12 +23,18 @@ public class PlayerController : MonoBehaviour {
     private Animator tor;
     private Animation tion;
 
+    //AttackPoolScript instantiation
+   // GameObject attackPool;
+   // AttackPoolScript aps;
+
 
 	// Use this for initialization
 	void Start () {
         theRB = GetComponent<Rigidbody2D>();
         tor = GetComponent<Animator>();
         tion = GetComponent<Animation>();
+      //  attackPool = GameObject.Find("AttackSpawn"); ;
+      //  aps = attackPool.GetComponent<AttackPoolScript>();
     }
 	
 	// Update is called once per frame
@@ -43,6 +49,7 @@ public class PlayerController : MonoBehaviour {
             nextFire = Time.time + fireRate;
             Instantiate(iceBolt, AttackSpawn.position, AttackSpawn.rotation);
             tor.SetBool("Attack_IB", true);
+           // aps.genAttack();
         }
         
     }
