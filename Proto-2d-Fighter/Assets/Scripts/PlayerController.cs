@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed;
     public float jumpForce;
     public float fireRate;
+    public float tForSprint;
+    public bool walking = false;
+    public bool sprinting = false;
+
 
     private float nextFire;
 
@@ -63,21 +67,59 @@ public class PlayerController : MonoBehaviour {
             return;
         }else if (Input.GetKey(left))
         {
+            if (sprinting == false)
+            {
+                if (walking == false)
+                {
+                    tForSprint = Time.time;
+                }
+                walking = true;
+                theRB.velocity = new Vector2(-moveSpeed / 2, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+                tor.SetBool("Walking", true);
+            }
 
-            theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
-            transform.localRotation = Quaternion.Euler(0, 180, 0);
-            tor.SetBool("Walking", true);
+            if (sprinting)
+            {
+                theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+            }
+            else if (Time.time >= tForSprint + 1.0f)
+            {
+                sprinting = true;
+                walking = false;
+            }
         }
         else if (Input.GetKey(right))
         {
-            theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);
-            transform.localRotation = Quaternion.Euler(0, 0, 0);
-            tor.SetBool("Walking", true);
+            if (sprinting == false)
+            {
+                if (walking == false)
+                {
+                    tForSprint = Time.time;
+                }
+                walking = true;
+                theRB.velocity = new Vector2(moveSpeed / 2, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+                tor.SetBool("Walking", true);
+            }
+            if (sprinting)
+            {
+                theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+            else if (Time.time >= tForSprint + 1.0f)
+            {
+                sprinting = true;
+                walking = false;
+            }
         }
         else
         {
             theRB.velocity = new Vector2(0, theRB.velocity.y);
             tor.SetBool("Walking", false);
+            walking = false;
+            sprinting = false;
         }
 
 

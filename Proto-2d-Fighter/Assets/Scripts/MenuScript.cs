@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour {
 
@@ -39,12 +40,17 @@ public class MenuScript : MonoBehaviour {
 
     public void StartArcade()
     {
-        Application.LoadLevel(1);
+        //I dont remember how exactly I set which scene was which numbered level. Its a little embarressing
+        //So now I am using LoadScene
+        //Application.LoadLevel(1);
+        SceneManager.LoadScene("characterSelect");
     }
 
     public void StartVS()
     {
-        Application.LoadLevel(2);
+        //Application.LoadLevel(2);
+        SceneManager.LoadScene("devTest");
+
     }
 
     public void ExitGame()
