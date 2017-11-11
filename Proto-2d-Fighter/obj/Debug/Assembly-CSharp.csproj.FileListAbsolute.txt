@@ -28,3 +28,4 @@ C:\Users\Anthony\workspace\Unity_games\Proto_2d_Fighter_Repo\Proto-2d-Fighter\Te
 C:\Users\Anthony\workspace\Unity_games\Proto_2d_Fighter_Repo\Proto-2d-Fighter\Temp\bin\Debug\UnityEngine.VR.xml
 C:\Users\Anthony\workspace\Unity_games\Proto_2d_Fighter_Repo\Proto-2d-Fighter\obj\Debug\Assembly-CSharp.dll
 C:\Users\Anthony\workspace\Unity_games\Proto_2d_Fighter_Repo\Proto-2d-Fighter\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Anthony\workspace\Unity_games\Proto_2d_Fighter_Repo\Proto-2d-Fighter\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
