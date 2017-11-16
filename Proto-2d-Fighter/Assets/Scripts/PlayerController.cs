@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour {
 
 
     private float nextFire;
-
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
@@ -28,10 +27,11 @@ public class PlayerController : MonoBehaviour {
     public GameObject iceBolt;
 
 
-
     private Rigidbody2D theRB;
     private Animator tor;
     private Animation tion;
+    private AimController AC;
+
 
     //AttackPoolScript instantiation
    // GameObject attackPool;
@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour {
         theRB = GetComponent<Rigidbody2D>();
         tor = GetComponent<Animator>();
         tion = GetComponent<Animation>();
+        AC = GetComponent<AimController>();
       //  attackPool = GameObject.Find("AttackSpawn"); ;
       //  aps = attackPool.GetComponent<AttackPoolScript>();
     }
@@ -100,6 +101,21 @@ public class PlayerController : MonoBehaviour {
                 //However, if it goes from a 180 degree pos to a 230 pos and then abruptly 130 and movement is cancelled, the character will be sent flying at 130 degrees.
                 //theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
                 //transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+                //NEED TO CHANGE THESE PARAMETERS TO TAKE INTO ACCOUNT THAT THE ANGLE GOES FROM 0 (Usually 0) to 179 (179) to -179 (181) to -0 (360)
+                if ((AC.angle >= 10 && AC.angle <= 80) || (AC.angle >= 100 && AC.angle <= 170))
+                {
+                    //-10 Velocity
+                }
+                else if (AC.angle >= 190 && AC.angle <= 350)
+                {
+                    //+10 Velocity
+                }
+                else if ((AC.angle >= 0 && AC.angle <= 9) || (AC.angle >= 169 && AC.angle <= 189) || (AC.angle >= 351 && AC.angle <= 360))
+                {
+                    //+-0 Velocity
+                }
+                    
             }
             else if (sprinting)
             {
