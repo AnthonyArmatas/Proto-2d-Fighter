@@ -34,7 +34,7 @@ public class AimController : MonoBehaviour {
       
         //To make it flip ( Have the reticle on the opposite side of the cursor)
         //Switch the position of the mouse and transform input in the angle function.
-        angle = AngleBetweenTwoPoints(Input.mousePosition, transform.position);    
+         angle = AngleBetweenTwoPoints(mouseOnScreen, positionOnScreen);    
         //changes the rotation of the reticle, on the z axis, to have the end that is not anchored to the player to point towards the mouse.
         transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));   
 	}

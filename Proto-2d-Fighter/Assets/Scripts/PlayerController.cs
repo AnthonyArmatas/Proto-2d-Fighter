@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour {
     //and after this character is "Finished" I am going to strip it and make
     //A general controller class to use as a base for every other class.
     //For now it is only name player Controller.
-    public float moveSpeed;
+    public float moveSpeed; //standard walking speed
+    public float moveSpdIncrimentor;
+    public float moveSpdCeiling;
     public float jumpForce;
     public float fireRate;
     public float tForSprint;
@@ -17,6 +19,9 @@ public class PlayerController : MonoBehaviour {
 
 
     private float nextFire;
+    private float CurMoveSpeed;
+
+
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
@@ -25,17 +30,12 @@ public class PlayerController : MonoBehaviour {
     public Transform AttackSpawn;
     public Transform aimposition;
     public GameObject iceBolt;
+    public AimController AC;
 
 
     private Rigidbody2D theRB;
     private Animator tor;
     private Animation tion;
-    private AimController AC;
-
-
-    //AttackPoolScript instantiation
-   // GameObject attackPool;
-   // AttackPoolScript aps;
 
 
 	// Use this for initialization
@@ -43,9 +43,8 @@ public class PlayerController : MonoBehaviour {
         theRB = GetComponent<Rigidbody2D>();
         tor = GetComponent<Animator>();
         tion = GetComponent<Animation>();
-        AC = GetComponent<AimController>();
-      //  attackPool = GameObject.Find("AttackSpawn"); ;
-      //  aps = attackPool.GetComponent<AttackPoolScript>();
+        //AC = GetComponent<AimController>();
+        CurMoveSpeed = moveSpeed;
     }
 	
 	// Update is called once per frame
@@ -74,50 +73,183 @@ public class PlayerController : MonoBehaviour {
         if (tor.GetBool("Dead") == true)
         {
             return;
-        }else if (Input.GetKey(left))
+        }
+        if (gliding == true)
         {
-            if (gliding == false)
-            {
-                if (sprinting == false)
-                {
-                    if (walking == false)
-                    {
-                        tForSprint = Time.time;
-                    }
-                    walking = true;
-                    theRB.velocity = new Vector2(-moveSpeed / 2, theRB.velocity.y);
-                    transform.localRotation = Quaternion.Euler(0, 180, 0);
-                    tor.SetBool("Walking", true);
-                }
-            }
-            if (gliding)
-            {
-                //Going to get the aimcontroller set up then add make the gliding functionality 
-                //Run off of the position of the mouse
-                //EX. if the mouse if aimed horizontally to the left and the left key is held
-                //The character will glide at a steady speed. If the left key is held and the mouse is at
-                // a 230 degree angle (from a 180 degree position) the character will speed up substantially. If the left key is held and the mouse is at
-                // a 130 degree angle (from a 180 degree position) the movement will begin to slow untill it is a 0 velosity and then will plumet.
-                //However, if it goes from a 180 degree pos to a 230 pos and then abruptly 130 and movement is cancelled, the character will be sent flying at 130 degrees.
-                //theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
-                //transform.localRotation = Quaternion.Euler(0, 180, 0);
+            Debug.Log(CurMoveSpeed);
+            Debug.Log(AC.angle);
 
-                //NEED TO CHANGE THESE PARAMETERS TO TAKE INTO ACCOUNT THAT THE ANGLE GOES FROM 0 (Usually 0) to 179 (179) to -179 (181) to -0 (360)
-                if ((AC.angle >= 10 && AC.angle <= 80) || (AC.angle >= 100 && AC.angle <= 170))
-                {
-                    //-10 Velocity
-                }
-                else if (AC.angle >= 190 && AC.angle <= 350)
-                {
-                    //+10 Velocity
-                }
-                else if ((AC.angle >= 0 && AC.angle <= 9) || (AC.angle >= 169 && AC.angle <= 189) || (AC.angle >= 351 && AC.angle <= 360))
-                {
-                    //+-0 Velocity
-                }
-                    
+            if (Input.GetKey(momventKey))
+            {
+                tor.SetBool("Gliding", false);
+                walking = false;
+                sprinting = false;
+                gliding = false;
+                return;            
             }
-            else if (sprinting)
+            if ((AC.angle >= 10 && AC.angle <= 80) || (AC.angle >= 100 && AC.angle <= 170)) // If the aim is pointing upward it will be faster
+            {
+                //CHANGE THE transform.localRotation = Quaternion.Euler(0, 0, 0); to The direction it is pointiing. IE. if (AC.angle >= 10 && AC.angle <= 80) then point change its rotation left 
+                //~-10 Velocity 
+                if (AC.angle >= 10 && AC.angle <= 80) //Facing Right
+                {
+                    if (CurMoveSpeed > 0)
+                    {
+                        if ((CurMoveSpeed -= moveSpdIncrimentor) <= 0)
+                        {
+                            CurMoveSpeed = 0;
+                        }
+                        else
+                        {
+                            CurMoveSpeed -= moveSpdIncrimentor;
+                        }
+                    }
+                    theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
+                    theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.x);
+                    //In transform.localRotation = Quaternion.Euler(0, 0, AC.angle); the change from 0 to AC.angle has the characters rotation match the position of the aim position
+                    transform.localRotation = Quaternion.Euler(0, 0, AC.angle);
+                }
+                else if (AC.angle >= 100 && AC.angle <= 170)//Facing Left
+                {
+                    if (CurMoveSpeed > 0)
+                    {
+                        if ((CurMoveSpeed -= moveSpdIncrimentor) <= 0)
+                        {
+                            CurMoveSpeed = 0;
+                        }
+                        else
+                        {
+                            CurMoveSpeed -= moveSpdIncrimentor;
+                        }
+                    }
+                    theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
+                    theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.x);
+                    //This is -AC.angle is that the character is not upside down, bc the value will be negative.
+                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
+                }
+            }
+            else if (AC.angle > 80 && AC.angle < 100)// If the aim is stright up it drop down fast
+            {
+                //~-30 Velocity
+                //It should lose all velocity and begin to fall in the opposite direction.
+                if (CurMoveSpeed > 0)
+                {
+                    if ((CurMoveSpeed -= moveSpdIncrimentor * 3) <= 0)
+                    {
+                        CurMoveSpeed = 0;
+                    }
+                    else
+                    {
+                        CurMoveSpeed -= moveSpdIncrimentor * 3;
+                    }
+                }
+                //Xinstead of y so it falls
+                theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.x);
+
+            }
+            else if ((AC.angle >= -170 && AC.angle <= -100) || (AC.angle >= -80 && AC.angle <= -10))// If the aim is pointing downward it will be faster
+            {
+                //~+10 Velocity
+
+                theRB.velocity = new Vector2(0, theRB.velocity.y);
+                if (AC.angle >= -80 && AC.angle <= -10) //Facing Right
+                {
+                    if (CurMoveSpeed < moveSpdCeiling)
+                    {
+                        if ((CurMoveSpeed += moveSpdIncrimentor) > moveSpdCeiling)
+                        {
+                            CurMoveSpeed = moveSpdCeiling;
+                        }
+                        else
+                        {
+                            CurMoveSpeed += moveSpdIncrimentor;
+                        }
+                    }
+                    theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
+                    transform.localRotation = Quaternion.Euler(0, 0, AC.angle);
+                }
+                else if (AC.angle >= -170 && AC.angle <= -100)//Facing Left
+                {
+                    if (CurMoveSpeed < moveSpdCeiling)
+                    {
+                        if ((CurMoveSpeed += moveSpdIncrimentor) > moveSpdCeiling)
+                        {
+                            CurMoveSpeed = moveSpdCeiling;
+                        }
+                        else
+                        {
+                            CurMoveSpeed += moveSpdIncrimentor;
+                        }
+                    }
+                    theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
+                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
+                }
+
+            }
+            else if ((AC.angle > -100 && AC.angle < -80)) // If the aim is stright down it will be significantly faster
+            {
+                //~+20 Velocity
+                if (CurMoveSpeed < moveSpdCeiling)
+                {
+                    if ((CurMoveSpeed += moveSpdIncrimentor * 2) > moveSpdCeiling)
+                    {
+                        CurMoveSpeed = moveSpdCeiling;
+                    }
+                    else
+                    {
+                        CurMoveSpeed += moveSpdIncrimentor * 2;
+                    }
+                }
+                theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
+                if (AC.angle > -90)
+                {
+                    transform.localRotation = Quaternion.Euler(0, 0, AC.angle);//Facing Right
+                }
+                else
+                {
+                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);//Facing Left
+                }
+            }
+            else if ((AC.angle >= 0 && AC.angle <= 9) || (AC.angle <= 0 && AC.angle >= -9) || (AC.angle >= 170 && AC.angle <= 180) || (AC.angle >= -180 && AC.angle <= -170))
+            {// If the aim is pointing horizontally it will not change speed.r
+                //+-0 Velocity
+                if ((AC.angle >= 0 && AC.angle <= 9) || (AC.angle <= 0 && AC.angle >= -9))//Right
+                {
+                    if (CurMoveSpeed == 0)
+                    {
+                        CurMoveSpeed = moveSpeed;
+                    }
+                    theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
+                    transform.localRotation = Quaternion.Euler(0, 0, AC.angle);
+                }
+                else if ((AC.angle >= 170 && AC.angle <= 180) || (AC.angle >= -180 && AC.angle <= -170))//Left
+                {
+                    if (CurMoveSpeed == 0)
+                    {
+                        CurMoveSpeed = moveSpeed;
+                    }
+                    theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
+                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
+                }
+            }
+
+            return;
+                                 
+        }
+        if (Input.GetKey(left))
+        {
+            if (sprinting == false)
+            {
+                if (walking == false)
+                {
+                    tForSprint = Time.time;
+                }
+                walking = true;
+                theRB.velocity = new Vector2(-moveSpeed / 2, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+                tor.SetBool("Walking", true);
+            }
+            if (sprinting)
             {
                 theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
                 transform.localRotation = Quaternion.Euler(0, 180, 0);
@@ -154,12 +286,12 @@ public class PlayerController : MonoBehaviour {
         }
         else if (Input.GetKey(momventKey))
         {
-            theRB.velocity = new Vector2(0, theRB.velocity.y);
             tor.SetBool("Walking", false);
             tor.SetBool("Gliding", true);
             walking = false;
             sprinting = false;
             gliding = true;
+            Debug.Log("MOVEMENT PRESSED");
         }
         else
         {
