@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
     void Update ()
     {
+        Debug.Log(AC.angle);
         if (tor.GetBool("Dead") == true)
         {
             return;
@@ -76,8 +77,8 @@ public class PlayerController : MonoBehaviour {
         }
         if (gliding == true)
         {
-            Debug.Log(CurMoveSpeed);
-            Debug.Log(AC.angle);
+            //Debug.Log(CurMoveSpeed);
+            //Debug.Log(AC.angle);
 
             if (Input.GetKey(momventKey))
             {
@@ -122,16 +123,27 @@ public class PlayerController : MonoBehaviour {
                             CurMoveSpeed -= moveSpdIncrimentor;
                         }
                     }
-                    theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
+                    //The y axis needs to be positive so it will go up
+                    theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
                     theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.x);
-                    //This is -AC.angle is that the character is not upside down, bc the value will be negative.
-                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
+                    //This is -leftangle is that the character is not upside down, bc the value will be negative.
+                    //This changes the rotation of the z axis so that the character does not flip upsidedown and backwards when moving left.
+                    //Honestly I got this answer intuativly, I need to go back to college or somthing to brush up on my math skills.
+                    float leftangle = AC.angle;
+                    leftangle = Mathf.Abs(leftangle);
+                    leftangle = 360 - (leftangle * 2);
+                    //Debug.Log(leftangle);
+                    transform.localRotation = Quaternion.Euler(1, 180, leftangle);
+                    
+                    //transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
                 }
             }
             else if (AC.angle > 80 && AC.angle < 100)// If the aim is stright up it drop down fast
             {
                 //~-30 Velocity
                 //It should lose all velocity and begin to fall in the opposite direction.
+                //NEED TO CHANGE
+                //It should be faceing up for a second before it starts to fall (Or making the increments and move speed slower makes this not matter)
                 if (CurMoveSpeed > 0)
                 {
                     if ((CurMoveSpeed -= moveSpdIncrimentor * 3) <= 0)
@@ -182,7 +194,17 @@ public class PlayerController : MonoBehaviour {
                         }
                     }
                     theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
-                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
+
+                    float leftangle = AC.angle;
+                    leftangle = Mathf.Abs(leftangle);
+                    leftangle = 360 - (leftangle * 2);
+                    //Debug.Log(leftangle);
+                    //The left angle needs to be negative when pointing to to get the proper
+                    //angle i.e. if it is pointing downward it needs to be negative so that the 
+                    //sprite will also be pointed down.
+                    transform.localRotation = Quaternion.Euler(1, 180, -leftangle);
+                    //transform.localRotation = Quaternion.Euler(1, 180, -AC.angle);
+                    
                 }
 
             }
@@ -229,7 +251,17 @@ public class PlayerController : MonoBehaviour {
                         CurMoveSpeed = moveSpeed;
                     }
                     theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
-                    transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
+
+                    float leftangle = AC.angle;
+                    leftangle = Mathf.Abs(leftangle);
+                    leftangle = 360 - (leftangle * 2);
+                    //Debug.Log(leftangle);
+                    //The left angle needs to be negative when pointing to to get the proper
+                    //angle i.e. if it is pointing downward it needs to be negative so that the 
+                    //sprite will also be pointed down.
+                    transform.localRotation = Quaternion.Euler(1, 180, -leftangle);
+
+                    //transform.localRotation = Quaternion.Euler(1, 180, AC.angle);
                 }
             }
 

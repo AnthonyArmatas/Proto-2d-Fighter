@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/devTest.unity
+- path: Assets/_Scenes/devTestGlidePlatform.unity
   isLoaded: 1
   isActive: 1
