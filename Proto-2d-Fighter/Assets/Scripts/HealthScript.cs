@@ -13,7 +13,6 @@ public class HealthScript : MonoBehaviour {
     private float maxHitPoints = 150;
     private Animator tor;
 
-
 	// Use this for initialization
     private void Start()
     {
@@ -32,6 +31,13 @@ public class HealthScript : MonoBehaviour {
 
     private void TakeDamage(float damage)
     {
+        // MouseLook Charcontdisable = GetComponent<MouseLook>().enabled = false;
+
+        //Calls the PlayerController script to stagger the player when hit.
+        PlayerController playerScrpt = GetComponent<PlayerController>();
+
+        playerScrpt.playerStagger();
+
         hitPoints -= damage;
         if (hitPoints == 0)
         {

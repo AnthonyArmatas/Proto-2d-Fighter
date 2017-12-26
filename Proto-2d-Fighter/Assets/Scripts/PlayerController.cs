@@ -18,9 +18,12 @@ public class PlayerController : MonoBehaviour {
     public bool walking = false;
     public bool sprinting = false;
     public bool gliding = false;
+    public bool isStaggered = false;
+    public float staggerTime;
 
 
     private float nextFire;
+    private float curStagT;
     private float CurMoveSpeed;
 
 
@@ -57,6 +60,20 @@ public class PlayerController : MonoBehaviour {
         {
             return;
         }
+        else if (isStaggered)
+        {
+            if(curStagT >= staggerTime)
+            {
+                isStaggered = false;
+                tor.SetBool("Stagger", false);
+                curStagT = 0;
+                return;
+            }
+            curStagT += Time.time;
+            Debug.Log(curStagT);
+
+            return;
+        }
         else if (Input.GetKey(throwIce) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
@@ -65,8 +82,8 @@ public class PlayerController : MonoBehaviour {
             Instantiate(iceBolt, AttackSpawn.position, aimposition.rotation);
             tor.SetBool("Attack_IB", true);
             // aps.genAttack();
-
         }
+
         if (gliding == true)
         {
             //Debug.Log(CurMoveSpeed);
@@ -97,7 +114,7 @@ public class PlayerController : MonoBehaviour {
     //FixedUpdate to update physics
     void FixedUpdate()
     {
-        if (tor.GetBool("Dead") == true)
+        if (tor.GetBool("Dead") == true || tor.GetBool("Stagger") == true)
         {
             return;
         }
@@ -239,4 +256,32 @@ public class PlayerController : MonoBehaviour {
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
         }
     }
+
+    public void playerStagger()
+    {
+        if (isStaggered)
+        {
+            return;
+        }
+        else
+        {
+            if (tor.GetBool("Dead") != true)
+            {
+                isStaggered = true;
+                tor.SetBool("Stagger", true);
+            }
+        }
+        if (gliding == true)
+        {
+            tor.SetBool("Gliding", false);
+            theRB.gravityScale = 10;
+            walking = false;
+            sprinting = false;
+            gliding = false;
+            return;
+        }
+        return;
+
+    }
+
 }
