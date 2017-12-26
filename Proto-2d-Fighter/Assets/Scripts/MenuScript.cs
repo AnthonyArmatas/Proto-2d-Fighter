@@ -49,7 +49,7 @@ public class MenuScript : MonoBehaviour {
     public void StartVS()
     {
         //Application.LoadLevel(2);
-        SceneManager.LoadScene("devTest");
+        SceneManager.LoadScene("devTestGlidePlatform");
 
     }
 
