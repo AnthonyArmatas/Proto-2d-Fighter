@@ -8,33 +8,35 @@ public class PlayerController : MonoBehaviour {
     //A general controller class to use as a base for every other class.
     //For now it is only name player Controller.
     public float moveSpeed; //standard walking speed
-    //Changing moveSpdCeiling to glide speed and taking out the moveSpdIncrimentor
-    //I like the idea of that kind of changing speeds but it is not playable, at least
-    //At high speeds. DELETE THIS COMMENT ON NEXT COMMIT
     public float glideMoveSpd; 
     public float jumpForce;
-    public float fireRate;
     public float tForSprint;
     public bool walking = false;
     public bool sprinting = false;
     public bool gliding = false;
     public bool isStaggered = false;
     public float staggerTime;
+    public bool cantMove = false;
 
-
+    public float fireRateIceBall; //.5
+    public float fireRateIceSpike; //1.5
     private float nextFire;
+
     private float curStagT;
     private float CurMoveSpeed;
-
 
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
     public KeyCode throwIce;
+    public KeyCode summonIceSpike;
     public KeyCode momventKey;
-    public Transform AttackSpawn;
-    public Transform aimposition;
+    public Transform attackSpawnIceBall;
+    public Transform aimpositionIceBall;
+    public Transform attackSpawnIceSpike;
+    public Transform aimpositionIceSpike;
     public GameObject iceBolt;
+    public GameObject iceSpike;
     public AimController AC;
 
 
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (isStaggered)
         {
-            if(curStagT >= staggerTime)
+            if (curStagT >= staggerTime)
             {
                 isStaggered = false;
                 tor.SetBool("Stagger", false);
@@ -74,14 +76,29 @@ public class PlayerController : MonoBehaviour {
 
             return;
         }
-        else if (Input.GetKey(throwIce) && Time.time > nextFire)
+        else if (Input.GetKey(throwIce) || Input.GetKey(summonIceSpike))
         {
-            nextFire = Time.time + fireRate;
-            //Added the aimposition rotation to the generation of the icebolt.
-            //BUG: If the position is behind the mage the icebolt will hit himself.
-            Instantiate(iceBolt, AttackSpawn.position, aimposition.rotation);
-            tor.SetBool("Attack_IB", true);
-            // aps.genAttack();
+            //Think about making the rest of the attacks function like this. Not Sure how else to get it to take in mult.
+            //Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.F)
+            if (Input.GetKey(throwIce) && Time.time > nextFire)
+            {
+                nextFire = Time.time + fireRateIceBall;
+                //Added the aimposition rotation to the generation of the icebolt.
+                //BUG: If the position is behind the mage the icebolt will hit himself.
+                Instantiate(iceBolt, attackSpawnIceBall.position, aimpositionIceBall.rotation);
+                tor.SetBool("Attack_IB", true);
+                // aps.genAttack();
+            }
+            else if (Input.GetKey(summonIceSpike) && Time.time > nextFire)
+            {
+                //BUG:NEED TO MAKE THE SUMMONSPIKE ANIMATION MATCH THE CANTMOVE TIME
+                cantMove = true;
+                nextFire = Time.time + fireRateIceSpike;
+                iceSpike.SetActive(true);
+
+                tor.SetBool("Attack_SB", true);
+            }
+            return;
         }
 
         if (gliding == true)
@@ -117,6 +134,16 @@ public class PlayerController : MonoBehaviour {
         if (tor.GetBool("Dead") == true || tor.GetBool("Stagger") == true)
         {
             return;
+        }
+        if (cantMove)
+        {
+            if (nextFire > Time.time)
+            {
+                return;
+            }
+            cantMove = false;
+            //DELETES GAMEOBJECT INSTEAD OF DEACTIVATING IT. WHY!?
+            iceSpike.SetActive(false);
         }
         if (gliding == true)
         {

@@ -12,6 +12,7 @@ public class IceAttackController : MonoBehaviour {
         //Gets the object(Usually an Iceball) and applies velocity to it making it move 
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
+
 	}
 
     void OnTriggerEnter2D(Collider2D coll)
