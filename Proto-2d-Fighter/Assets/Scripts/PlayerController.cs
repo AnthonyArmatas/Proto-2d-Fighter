@@ -38,25 +38,29 @@ public class PlayerController : MonoBehaviour {
     public GameObject iceBolt;
     public GameObject iceSpike;
     public AimController AC;
-
+    public IceSpikeControllerScript iceSpkContrlScpt;
 
     private Rigidbody2D theRB;
     private Animator tor;
-    private Animation tion;
+    //private Animation tion;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         theRB = GetComponent<Rigidbody2D>();
         tor = GetComponent<Animator>();
-        tion = GetComponent<Animation>();
+        //tion = GetComponent<Animation>();
         //AC = GetComponent<AimController>();
+
         CurMoveSpeed = moveSpeed;
     }
 	
 	// Update is called once per frame
     void Update ()
     {
+        //Need to call the IceSpikeControllerScript to instantiate the icespike
+        //So that it can make and check a collider counter so that 
+        
+
         //Debug.Log(AC.angle);
         if (tor.GetBool("Dead") == true)
         {
@@ -94,8 +98,8 @@ public class PlayerController : MonoBehaviour {
                 //BUG:NEED TO MAKE THE SUMMONSPIKE ANIMATION MATCH THE CANTMOVE TIME
                 cantMove = true;
                 nextFire = Time.time + fireRateIceSpike;
-                iceSpike.SetActive(true);
-
+                //Instantiate(iceSpike, attackSpawnIceSpike.position, aimpositionIceSpike.rotation);
+                iceSpkContrlScpt.SpawnIceSpike(attackSpawnIceSpike);
                 tor.SetBool("Attack_SB", true);
             }
             return;
@@ -143,7 +147,7 @@ public class PlayerController : MonoBehaviour {
             }
             cantMove = false;
             //DELETES GAMEOBJECT INSTEAD OF DEACTIVATING IT. WHY!?
-            iceSpike.SetActive(false);
+            //iceSpike.SetActive(false);
         }
         if (gliding == true)
         {
@@ -284,7 +288,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void playerStagger()
+    public void PlayerStagger()
     {
         if (isStaggered)
         {

@@ -36,7 +36,7 @@ public class HealthScript : MonoBehaviour {
         //Calls the PlayerController script to stagger the player when hit.
         PlayerController playerScrpt = GetComponent<PlayerController>();
 
-        playerScrpt.playerStagger();
+        playerScrpt.PlayerStagger();
 
         hitPoints -= damage;
         if (hitPoints == 0)
