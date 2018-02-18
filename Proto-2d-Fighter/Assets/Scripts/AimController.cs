@@ -12,6 +12,7 @@ public class AimController : MonoBehaviour {
      */
 
     public Transform playerPosition;
+    public Transform tipOfAim;
     private Vector2 mousePos;
     private Vector2 rotationPosition;
     private Vector2 relative;
@@ -31,10 +32,18 @@ public class AimController : MonoBehaviour {
          //Get the Screen position of the mouse
          Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-      
+
         //To make it flip ( Have the reticle on the opposite side of the cursor)
         //Switch the position of the mouse and transform input in the angle function.
-         angle = AngleBetweenTwoPoints(mouseOnScreen, positionOnScreen);    
+        //Currently if angle is at 180 - 360 degrees it appears as a neg 179 through .01.
+        // to fix if neg then add it to 360. If it passes over 180 and jumps neg 179 , then
+        //-179 + 360 = 181
+        angle = AngleBetweenTwoPoints(mouseOnScreen, positionOnScreen);
+        if (angle < 0)
+        {
+            angle = angle + 360;
+        }
+        
         //changes the rotation of the reticle, on the z axis, to have the end that is not anchored to the player to point towards the mouse.
         transform.rotation =  Quaternion.Euler (new Vector3(0f,0f,angle));   
 	}
