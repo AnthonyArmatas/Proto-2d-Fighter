@@ -7,16 +7,17 @@ public class genericPlayerController : MonoBehaviour {
 	public float moveSpeed; //standard walking speed
 	public float jumpForce;
 	public float tForSprint;
-	public bool walking = false;
+    public float CurMoveSpeed;
+
+    public bool walking = false;
 	public bool sprinting = false;
 	public bool isStaggered = false;
-	public float staggerTime;
 	public bool cantMove = false;
 
-	private float curStagT;
-	private float CurMoveSpeed;
+    private float whenStaggered;
+    private float staggerTime = 0.5f;
 
-	public KeyCode left;
+    public KeyCode left;
 	public KeyCode right;
 	public KeyCode jump;
 	//public KeyCode momventKey;
@@ -24,54 +25,69 @@ public class genericPlayerController : MonoBehaviour {
 
 	private Rigidbody2D theRB;
 	private Animator tor;
+    public HealthScript hs;
 
 	// Use this for initialization
 	void Start () {
 		theRB = GetComponent<Rigidbody2D>();
-		tor = GetComponent<Animator>();
+        tor = GetComponent<Animator>();
+		hs = GetComponent<HealthScript>();
 
-		CurMoveSpeed = moveSpeed;
+        CurMoveSpeed = moveSpeed;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (tor.GetBool("Dead") == true)
+		if (hs.isDead)
 		{
 			return;
-		}
+        }
+        else if (isStaggered)
+        {
+            if ((Time.time - whenStaggered) >= staggerTime)
+            {
+                isStaggered = false;
+                tor.SetBool("Stagger", false);
+                return;
+            }
 
-	}
+            return;
+        }
+
+    }
 
 	//FixedUpdate is used instead of update b/c you use
 	//FixedUpdate to update physics
 	void FixedUpdate()
 	{
-		if (tor.GetBool("Dead") == true || tor.GetBool("Stagger") == true)
+        //Why are we checking the animator? Why not check the bool variables in the script?
+		if (hs.isDead || isStaggered)
 		{
 			return;
 		}
-		if (Input.GetKey(left))
+		if (Input.GetKey(left)) //Make a get direction method and have that method call another which will set these values to clear the clutter
 		{
 			if (sprinting == false)
 			{
 				if (walking == false)
 				{
 					tForSprint = Time.time;
-				}
-				walking = true;
-				theRB.velocity = new Vector2(-moveSpeed / 2, theRB.velocity.y);
-				transform.localRotation = Quaternion.Euler(0, 180, 0);
-				tor.SetBool("Walking", true);
-			}
-			if (sprinting)
+
+                    walking = true;
+                    tor.SetBool("Walking", true);
+                }
+                else if (Time.time >= tForSprint + 1.0f)
+                {
+                    sprinting = true;
+                    walking = false;
+                }
+                theRB.velocity = new Vector2(-moveSpeed / 2, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+            } else if (sprinting)
 			{
 				theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
 				transform.localRotation = Quaternion.Euler(0, 180, 0);
-			}
-			else if (Time.time >= tForSprint + 1.0f)
-			{
-				sprinting = true;
-				walking = false;
 			}
 		}
 		else if (Input.GetKey(right))
@@ -81,28 +97,28 @@ public class genericPlayerController : MonoBehaviour {
 				if (walking == false)
 				{
 					tForSprint = Time.time;
-				}
-				walking = true;
-				theRB.velocity = new Vector2(moveSpeed / 2, theRB.velocity.y);
-				transform.localRotation = Quaternion.Euler(0, 0, 0);
-				tor.SetBool("Walking", true);
-			}
-			if (sprinting)
+
+                    walking = true;
+                    tor.SetBool("Walking", true);
+                }
+                else if (Time.time >= tForSprint + 1.0f)
+                {
+                    sprinting = true;
+                    walking = false;
+                }
+                theRB.velocity = new Vector2(moveSpeed / 2, theRB.velocity.y);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+            else if (sprinting)
 			{
 				theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);
 				transform.localRotation = Quaternion.Euler(0, 0, 0);
-			}
-			else if (Time.time >= tForSprint + 1.0f)
-			{
-				sprinting = true;
-				walking = false;
 			}
 		}
 		else
 		{
 			theRB.velocity = new Vector2(0, theRB.velocity.y);
 			tor.SetBool("Walking", false);
-			tor.SetBool("Gliding", false);
 			walking = false;
 			sprinting = false;
 
@@ -121,10 +137,11 @@ public class genericPlayerController : MonoBehaviour {
 		}
 		else
 		{
-			if (tor.GetBool("Dead") != true)
+			if (hs.isDead != true)
 			{
 				isStaggered = true;
-				tor.SetBool("Stagger", true);
+                whenStaggered = Time.time;
+                tor.SetBool("Stagger", true);
 			}
 		}
 		return;

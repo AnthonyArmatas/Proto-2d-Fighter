@@ -8,6 +8,7 @@ public class HealthScript : MonoBehaviour {
     //Passed in an amount and bar to manipulate
     public Image currentHealthBar;
     public Text ratioText;
+    public bool isDead = false;
 
     private float hitPoints = 150;
     private float maxHitPoints = 150;
@@ -42,6 +43,7 @@ public class HealthScript : MonoBehaviour {
         if (hitPoints == 0)
         {
             tor.SetBool("Dead", true);
+            isDead = true;
             Debug.Log("Dead!");
         }
         if (hitPoints < 0)

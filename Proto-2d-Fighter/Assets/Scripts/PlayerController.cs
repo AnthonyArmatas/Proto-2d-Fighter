@@ -15,14 +15,14 @@ public class PlayerController : MonoBehaviour {
     public bool sprinting = false;
     public bool gliding = false;
     public bool isStaggered = false;
-    public float staggerTime;
-    public bool cantMove = false;
+    public bool cantMove = false; 
 
     public float fireRateIceBall; //.5
     public float fireRateIceSpike; //1.5
     private float nextFire;
 
-    private float curStagT;
+    private float whenStaggered;
+    private float staggerTime = 0.5f;
     private float CurMoveSpeed;
 
     public KeyCode left;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
     {
         //Need to call the IceSpikeControllerScript to instantiate the icespike
         //So that it can make and check a collider counter so that 
-        
+
 
         //Debug.Log(AC.angle);
         if (tor.GetBool("Dead") == true)
@@ -68,17 +68,16 @@ public class PlayerController : MonoBehaviour {
         }
         else if (isStaggered)
         {
-            if (curStagT >= staggerTime)
+            if (( Time.time - whenStaggered) >= staggerTime)
             {
                 isStaggered = false;
                 tor.SetBool("Stagger", false);
-                curStagT = 0;
                 return;
             }
-            curStagT += Time.time;
-            Debug.Log(curStagT);
 
             return;
+                
+            
         }
         else if (Input.GetKey(throwIce) || Input.GetKey(summonIceSpike))
         {
@@ -135,6 +134,7 @@ public class PlayerController : MonoBehaviour {
     //FixedUpdate to update physics
     void FixedUpdate()
     {
+        //Why are we checking the animator? Why not check the bool variables in the script?
         if (tor.GetBool("Dead") == true || tor.GetBool("Stagger") == true)
         {
             return;
@@ -299,6 +299,7 @@ public class PlayerController : MonoBehaviour {
             if (tor.GetBool("Dead") != true)
             {
                 isStaggered = true;
+                whenStaggered = Time.time;
                 tor.SetBool("Stagger", true);
             }
         }
