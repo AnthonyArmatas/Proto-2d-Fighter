@@ -230,6 +230,7 @@
     <Compile Include="Assets\Scripts\fireCharacterPlayerController.cs" />
     <Compile Include="Assets\Scripts\genericPlayerController.cs" />
     <Compile Include="Assets\Scripts\HealthScript.cs" />
+    <Compile Include="Assets\Scripts\IceAbilityScript.cs" />
     <Compile Include="Assets\Scripts\IceAttackController.cs" />
     <Compile Include="Assets\Scripts\IceMageControllerScript.cs" />
     <Compile Include="Assets\Scripts\IceSpikeControllerScript.cs" />

@@ -42,7 +42,6 @@ public class IceMageControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         if (hs.isDead || gpc.isStaggered) // Would it be better to access it through the gpc script or the hs?
         {
             return;
@@ -84,6 +83,7 @@ public class IceMageControllerScript : MonoBehaviour {
                 gpc.walking = false;
                 gpc.sprinting = false;
                 gliding = false;
+                gpc.movAbltyEnabled = false;
                 return;
             }
         }
@@ -94,6 +94,7 @@ public class IceMageControllerScript : MonoBehaviour {
             gpc.walking = false;
             gpc.sprinting = false;
             gliding = true;
+            gpc.movAbltyEnabled = true;
             Debug.Log("MOVEMENT PRESSED");
         }
 

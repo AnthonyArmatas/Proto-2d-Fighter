@@ -12,7 +12,9 @@ public class genericPlayerController : MonoBehaviour {
     public bool walking = false;
 	public bool sprinting = false;
 	public bool isStaggered = false;
-	public bool cantMove = false;
+    //A bool the specific character classes have access to which disables usual movement when
+    //Their special movement ability is enabled
+    public bool movAbltyEnabled = false;
 
     private float whenStaggered;
     private float staggerTime = 0.5f;
@@ -60,60 +62,17 @@ public class genericPlayerController : MonoBehaviour {
 	//FixedUpdate to update physics
 	void FixedUpdate()
 	{
-        //Why are we checking the animator? Why not check the bool variables in the script?
-		if (hs.isDead || isStaggered)
+		if (hs.isDead || isStaggered || movAbltyEnabled)
 		{
 			return;
 		}
 		if (Input.GetKey(left)) //Make a get direction method and have that method call another which will set these values to clear the clutter
 		{
-			if (sprinting == false)
-			{
-				if (walking == false)
-				{
-					tForSprint = Time.time;
-
-                    walking = true;
-                    tor.SetBool("Walking", true);
-                }
-                else if (Time.time >= tForSprint + 1.0f)
-                {
-                    sprinting = true;
-                    walking = false;
-                }
-                theRB.velocity = new Vector2(-moveSpeed / 2, theRB.velocity.y);
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
-
-            } else if (sprinting)
-			{
-				theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
-				transform.localRotation = Quaternion.Euler(0, 180, 0);
-			}
-		}
+            moveLeft();
+        }
 		else if (Input.GetKey(right))
 		{
-			if (sprinting == false)
-			{
-				if (walking == false)
-				{
-					tForSprint = Time.time;
-
-                    walking = true;
-                    tor.SetBool("Walking", true);
-                }
-                else if (Time.time >= tForSprint + 1.0f)
-                {
-                    sprinting = true;
-                    walking = false;
-                }
-                theRB.velocity = new Vector2(moveSpeed / 2, theRB.velocity.y);
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
-            }
-            else if (sprinting)
-			{
-				theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);
-				transform.localRotation = Quaternion.Euler(0, 0, 0);
-			}
+            moveRight();
 		}
 		else
 		{
@@ -129,7 +88,64 @@ public class genericPlayerController : MonoBehaviour {
 		}
 	}
 
-	public void PlayerStagger()
+    public void moveLeft()
+    {
+        if (sprinting == false)
+        {
+            if (walking == false)
+            {
+                tForSprint = Time.time;
+
+                walking = true;
+                tor.SetBool("Walking", true);
+            }
+            else if (Time.time >= tForSprint + 1.0f)
+            {
+                sprinting = true;
+                walking = false;
+            }
+            theRB.velocity = new Vector2(-(CurMoveSpeed / 2), theRB.velocity.y);
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+        }
+        else if (sprinting)
+        {
+            theRB.velocity = new Vector2(-(CurMoveSpeed), theRB.velocity.y);
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+        }
+
+
+    }
+
+    public void moveRight()
+    {
+        if (sprinting == false)
+        {
+            if (walking == false)
+            {
+                tForSprint = Time.time;
+
+                walking = true;
+                tor.SetBool("Walking", true);
+            }
+            else if (Time.time >= tForSprint + 1.0f)
+            {
+                sprinting = true;
+                walking = false;
+            }
+            theRB.velocity = new Vector2((CurMoveSpeed / 2), theRB.velocity.y);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (sprinting)
+        {
+            theRB.velocity = new Vector2((CurMoveSpeed), theRB.velocity.y);
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+
+
+    public void PlayerStagger()
 	{
 		if (isStaggered)
 		{
