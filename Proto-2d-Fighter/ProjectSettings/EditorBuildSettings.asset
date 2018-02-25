@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/devTestGlidePlatform.unity
     guid: b7552aa0854ab794eacd70545f10eb0a
+  - enabled: 1
+    path: Assets/_Scenes/settings.unity
+    guid: e35986f15bfe24440a7743852b152b44
