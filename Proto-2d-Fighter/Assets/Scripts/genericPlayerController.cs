@@ -13,12 +13,14 @@ public class genericPlayerController : MonoBehaviour {
     public bool walking = false;
 	public bool sprinting = false;
     public bool movAbltyEnabled = false;
+    public bool isSlowed = false;
     public bool isStaggered = false;
     //A bool the specific character classes have access to which disables usual movement when
     //Their special movement ability is enabled
 
     private float whenStaggered;
     private float staggerTime = 0.5f;
+    private float slowTime = 0.5f;
 
     public KeyCode left;
 	public KeyCode right;
@@ -65,7 +67,7 @@ public class genericPlayerController : MonoBehaviour {
 	//FixedUpdate to update physics
 	void FixedUpdate()
 	{
-		if (hs.isDead || isStaggered || movAbltyEnabled)
+		if (hs.isDead || isStaggered)
 		{
 			return;
 		}
@@ -73,11 +75,12 @@ public class genericPlayerController : MonoBehaviour {
         {
             moveSpecial();
         }
-        if (Input.GetKey(left)) //Make a get direction method and have that method call another which will set these values to clear the clutter
-		{
+        if (Input.GetKey(left) && (movAbltyEnabled != true)) //Make a get direction method and have that method call another which will set these values to clear the clutter
+        {                                                    //The (movAbltyEnabled != true) should prevent bi-directional movement keys from occuring while the movement
+                                                             //key is enabled but also allow for the code to walk to the movement key tri
             moveLeft();
         }
-		else if (Input.GetKey(right))
+		else if (Input.GetKey(right) && (movAbltyEnabled != true))
 		{
             moveRight();
 		}
@@ -85,15 +88,15 @@ public class genericPlayerController : MonoBehaviour {
         {
             toggleSpclMove();
         }
-		else
-		{
+		else if (movAbltyEnabled != true)
+        {
 			theRB.velocity = new Vector2(0, theRB.velocity.y);
 			tor.SetBool("Walking", false);
 			walking = false;
 			sprinting = false;
 
 		}
-		if (Input.GetKeyDown(jump))
+        if (Input.GetKeyDown(jump))
 		{
 			theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
 		}
@@ -235,6 +238,7 @@ public class genericPlayerController : MonoBehaviour {
             walking = false;
             sprinting = false;
             movAbltyEnabled = true;
+            theRB.gravityScale = 0;
             iceMovement();
         }
     }
@@ -269,5 +273,24 @@ public class genericPlayerController : MonoBehaviour {
 		return;
 
 	}
+
+    public void PlayerSlowed() //Finish Fixing the slow effect. Have the Ice Attack Controller call this function like it does TakeDamage. SLowing it should make its movement speed half of what it usually is, and its jump height half
+    {
+        if (isSlowed)
+        {
+            return;
+        }
+        else
+        {
+            if (hs.isDead != true)
+            {
+                isStaggered = true;
+                whenStaggered = Time.time;
+                tor.SetBool("Stagger", true);
+            }
+        }
+        return;
+
+    }
 
 }

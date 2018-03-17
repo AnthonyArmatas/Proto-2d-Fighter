@@ -23,6 +23,10 @@ public class IceAttackController : MonoBehaviour {
             coll.gameObject.SendMessage("TakeDamage", 10);
             DestroyObject(this.gameObject);
         }
+        else if (coll.gameObject.tag == "Slow")
+        {
+
+        }
         else
             Debug.Log(gameObject.tag);
 

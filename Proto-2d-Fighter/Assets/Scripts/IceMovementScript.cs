@@ -11,19 +11,26 @@ public class IceMovementScript : MonoBehaviour {
 
         switch (glideAngle)
         {
-            case 1:
+            case 1: //RIGHT
                 theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
                 theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.x);
+                theRB.transform.localRotation = Quaternion.Euler(0, 0, AC.angle);
+
                 break;
-            case 2:
+            case 2: //LEFT
                 theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
                 theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.x);
+                theRB.transform.localRotation = Quaternion.Euler(180, 0, -AC.angle);
                 break;
-            case 3:
-                theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.y);
-                break;
-            case 4:
+            case 3: //LEFT
                 theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
+                theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.x);
+                theRB.transform.localRotation = Quaternion.Euler(180,0,-AC.angle);
+                break;
+            case 4: //RIGHT
+                theRB.velocity = new Vector2(-CurMoveSpeed, theRB.velocity.y);
+                theRB.velocity = new Vector2(CurMoveSpeed, theRB.velocity.x);
+                theRB.transform.localRotation = Quaternion.Euler(0, 0, AC.angle);
                 break;
             default:
                 return;
