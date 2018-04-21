@@ -5,7 +5,7 @@ using UnityEngine;
 public class genericPlayerController : MonoBehaviour {
 
     public int charClass;// { Ice = 1, Blast = 2, Swing = 3, Phase = 4} If it is 0, we know there was an error in passing in the character type
-    public float moveSpeed; //standard walking speed;
+    public float moveSpeed = 5; //standard walking speed;
 	public float jumpForce;
 	public float tForSprint;
     public float CurMoveSpeed;
@@ -20,22 +20,33 @@ public class genericPlayerController : MonoBehaviour {
 
     private float whenStaggered;
     private float staggerTime = 0.5f;
+    private float whenSlowed;
     private float slowTime = 0.5f;
 
     public KeyCode left;
 	public KeyCode right;
-    public KeyCode momventKey;
+    public KeyCode movementKey;
     public KeyCode jump;
-	//public KeyCode momventKey;
+    public KeyCode attack;
+    //public KeyCode movementKey;
 
-	private Rigidbody2D theRB;
+    private Rigidbody2D theRB;
 	private Animator tor;
 
     public AimController AC;
     public HealthScript hs;
 
-	// Use this for initialization
-	void Start () {
+    //Class Specific Variables: //Will try to consolidate and share variables in the future
+    //Blast
+    public bool charging = false;
+    public bool exploding = false;
+    public bool midPloding = false;
+
+    private float explosionCounter;
+
+
+    // Use this for initialization
+    void Start () {
 		theRB = GetComponent<Rigidbody2D>();
         tor = GetComponent<Animator>();
 		hs = GetComponent<HealthScript>();
@@ -45,62 +56,148 @@ public class genericPlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (hs.isDead)
+		if (hs.isDead || isStaggered)
 		{
-			return;
-        }
-        else if (isStaggered)
-        {
-            if ((Time.time - whenStaggered) >= staggerTime)
+            if (isStaggered)
             {
-                isStaggered = false;
-                tor.SetBool("Stagger", false);
+                if ((Time.time - whenStaggered) >= staggerTime)
+                {
+                    isStaggered = false;
+                    tor.SetBool("Stagger", false);
+                    return;
+                }
+            }
+                return;
+        }
+        else if (isSlowed)
+        {
+            if(Time.time - whenSlowed >= slowTime)
+            {
+                isSlowed = false;
+                CurMoveSpeed = moveSpeed;
                 return;
             }
 
-            return;
+            //return; //This effectivly made slow a stun, idk why it is here.
         }
-
-    }
-
-	//FixedUpdate is used instead of update b/c you use
-	//FixedUpdate to update physics
-	void FixedUpdate()
-	{
-		if (hs.isDead || isStaggered)
-		{
-			return;
-		}
         if (movAbltyEnabled)
         {
             moveSpecial();
+        }
+        if (Input.GetKey(attack))
+        {
+            playerAttack();
         }
         if (Input.GetKey(left) && (movAbltyEnabled != true)) //Make a get direction method and have that method call another which will set these values to clear the clutter
         {                                                    //The (movAbltyEnabled != true) should prevent bi-directional movement keys from occuring while the movement
                                                              //key is enabled but also allow for the code to walk to the movement key tri
             moveLeft();
         }
-		else if (Input.GetKey(right) && (movAbltyEnabled != true))
-		{
+        else if (Input.GetKey(right) && (movAbltyEnabled != true))
+        {
             moveRight();
-		}
-        else if (Input.GetKey(momventKey))
+        }
+        else if (Input.GetKey(movementKey))
         {
             toggleSpclMove();
         }
-		else if (movAbltyEnabled != true)
+        else if (movAbltyEnabled != true)
         {
-			theRB.velocity = new Vector2(0, theRB.velocity.y);
-			tor.SetBool("Walking", false);
-			walking = false;
-			sprinting = false;
+            theRB.velocity = new Vector2(0, theRB.velocity.y);
+            tor.SetBool("Walking", false);
+            walking = false;
+            sprinting = false;
 
-		}
+        }
         if (Input.GetKeyDown(jump))
-		{
-			theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-		}
-	}
+        {
+            if (isSlowed)
+            {
+                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce / 2);
+            }
+            else
+            {
+                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+            }
+
+        }
+
+    }
+
+	//FixedUpdate is used instead of update b/c you use
+	//FixedUpdate to update physics
+	void FixedUpdate() ///////////////NEED TO CHANGE THE GetKey to update and have it respond in FixedUpdate
+	{
+        /* if (Input.GetKey(movementKey)) //Added it twice to make try to assure it always goes off.
+         {                             //https://answers.unity.com/questions/620981/input-and-applying-physics-update-or-fixedupdate.html
+             toggleSpclMove();
+         }*/
+        if (hs.isDead || isStaggered)
+        {
+            if (isStaggered)
+            {
+                if ((Time.time - whenStaggered) >= staggerTime)
+                {
+                    isStaggered = false;
+                    tor.SetBool("Stagger", false);
+                    return;
+                }
+            }
+            return;
+        }
+        else if (isSlowed)
+        {
+            if (Time.time - whenSlowed >= slowTime)
+            {
+                isSlowed = false;
+                CurMoveSpeed = moveSpeed;
+                return;
+            }
+
+            //return; //This effectivly made slow a stun, idk why it is here.
+        }
+        if (movAbltyEnabled)
+        {
+            moveSpecial();
+        }
+        if (Input.GetKey(attack))
+        {
+            playerAttack();
+        }
+        if (Input.GetKey(left) && (movAbltyEnabled != true)) //Make a get direction method and have that method call another which will set these values to clear the clutter
+        {                                                    //The (movAbltyEnabled != true) should prevent bi-directional movement keys from occuring while the movement
+                                                             //key is enabled but also allow for the code to walk to the movement key tri
+            moveLeft();
+        }
+        else if (Input.GetKey(right) && (movAbltyEnabled != true))
+        {
+            moveRight();
+        }
+        else if (Input.GetKey(movementKey))
+        {
+            toggleSpclMove();
+        }
+        else if (movAbltyEnabled != true)
+        {
+            theRB.velocity = new Vector2(0, theRB.velocity.y);
+            tor.SetBool("Walking", false);
+            walking = false;
+            sprinting = false;
+
+        }
+        if (Input.GetKeyDown(jump))
+        {
+            if (isSlowed)
+            {
+                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce / 2);
+            }
+            else
+            {
+                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+            }
+
+        }
+    }
 
     public void moveLeft()
     {
@@ -118,10 +215,10 @@ public class genericPlayerController : MonoBehaviour {
                 sprinting = true;
                 walking = false;
             }
-            theRB.velocity = new Vector2(-(CurMoveSpeed / 2), theRB.velocity.y);
+            theRB.velocity = new Vector2(-(CurMoveSpeed / 2), theRB.velocity.y); //This works functionally, but CurMoveSpeed never actually changes to so anything based on that will be in error if slowed.
             //Test to see if you can change the velocity with a vector from another file. You can.
-            //IceMovementScript imc = new IceMovementScript();
-            //imc.runTest(theRB, CurMoveSpeed);
+            //IceMovementScript ims = new IceMovementScript();
+            //ims.runTest(theRB, CurMoveSpeed);
             transform.localRotation = Quaternion.Euler(0, 180, 0);
 
         }
@@ -150,7 +247,7 @@ public class genericPlayerController : MonoBehaviour {
                 sprinting = true;
                 walking = false;
             }
-            theRB.velocity = new Vector2((CurMoveSpeed / 2), theRB.velocity.y);
+            theRB.velocity = new Vector2((CurMoveSpeed / 2), theRB.velocity.y);//This works functionally, but CurMoveSpeed never actually changes to so anything based on that will be in error if slowed.
             transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
         else if (sprinting)
@@ -181,14 +278,38 @@ public class genericPlayerController : MonoBehaviour {
         }
     }
 
+    public void playerAttack()
+    {
+        switch (charClass)
+        {
+            case 1:
+                IceAttacktScript ias = new IceAttacktScript();
+                ias = GetComponent<IceAttacktScript>();
+                ias.launchIceBolt(tor);
+                break;
+            case 2:
+                //toggleBlast();
+                break;
+            case 3:
+                //toggleSwing();
+                break;
+            case 4:
+                //togglePhase();
+                break;
+            default:
+                return;
+        }
+    }
+
     public void iceMovement()
     {
-        IceMovementScript imc = new IceMovementScript();
-        imc.iceGlide(AC, theRB, CurMoveSpeed);
+        IceMovementScript ims = new IceMovementScript();
+        ims.iceGlide(AC, theRB, CurMoveSpeed);
     }
     public void blastMovement()
     {
-
+        BlastMovementScript bms = new BlastMovementScript();
+        bms.BlastMove(AC, theRB, movementKey, explosionCounter);
     }
     public void swingMovement()
     {
@@ -244,7 +365,24 @@ public class genericPlayerController : MonoBehaviour {
     }
     public void toggleBlast()
     {
-
+        if (Input.GetKeyDown(movementKey)) // GetKeyDown tracks the intial press not that it is held down
+        {
+            if (charging == true)
+            {
+                Debug.Log(explosionCounter);
+            }
+            else
+            {
+                charging = true;
+                explosionCounter += Time.deltaTime;
+                Debug.Log(explosionCounter);
+            }
+        }
+        else if (Input.GetKeyUp(movementKey))
+        {
+            charging = false;
+            blastMovement();
+        }
     }
     public void toggleSwing()
     {
@@ -274,7 +412,7 @@ public class genericPlayerController : MonoBehaviour {
 
 	}
 
-    public void PlayerSlowed() //Finish Fixing the slow effect. Have the Ice Attack Controller call this function like it does TakeDamage. SLowing it should make its movement speed half of what it usually is, and its jump height half
+    public void PlayerSlowed() 
     {
         if (isSlowed)
         {
@@ -284,9 +422,10 @@ public class genericPlayerController : MonoBehaviour {
         {
             if (hs.isDead != true)
             {
-                isStaggered = true;
-                whenStaggered = Time.time;
-                tor.SetBool("Stagger", true);
+                isSlowed = true;
+                whenSlowed = Time.time;
+                CurMoveSpeed = moveSpeed / 2;
+                //tor.SetBool("Slowed", true);
             }
         }
         return;
@@ -294,3 +433,7 @@ public class genericPlayerController : MonoBehaviour {
     }
 
 }
+
+
+//Known bugs:
+//When Running if the player tries to activate the movement key, it does not go off.

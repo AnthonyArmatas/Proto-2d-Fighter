@@ -35,9 +35,9 @@ public class HealthScript : MonoBehaviour {
         // MouseLook Charcontdisable = GetComponent<MouseLook>().enabled = false;
 
         //Calls the PlayerController script to stagger the player when hit.
-        PlayerController playerScrpt = GetComponent<PlayerController>();
-
-        playerScrpt.PlayerStagger();
+        //PlayerController playerScrpt = GetComponent<PlayerController>();
+        genericPlayerController gplayerScrpt = GetComponent<genericPlayerController>();
+        gplayerScrpt.PlayerStagger();
 
         hitPoints -= damage;
         if (hitPoints == 0)
@@ -51,6 +51,17 @@ public class HealthScript : MonoBehaviour {
             hitPoints = 0;
         }
         UpdateHealthBar();
+    }
+
+    private void TakeIceDamage()
+    {
+        //Since I will be getting rid of the health component of the game, the HealthScript will be that in name only.
+        //It will fuction as a status controller. 
+        //Calls the genericPlayerController script to slow the player when hit.
+        genericPlayerController gplayerScrpt = GetComponent<genericPlayerController>();
+
+        gplayerScrpt.PlayerSlowed();
+
     }
 
     private void HealDamage(float heal)

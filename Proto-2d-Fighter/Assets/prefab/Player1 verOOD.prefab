@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 58297237401159934}
   - component: {fileID: 114856490554960958}
   - component: {fileID: 114911979116393192}
-  - component: {fileID: 114018570299868620}
+  - component: {fileID: 114033451026663018}
   m_Layer: 0
   m_Name: Player1 verOOD
   m_TagString: Player
@@ -180,7 +180,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114018570299868620
+--- !u!114 &114033451026663018
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -188,16 +188,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1789325834891966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef696a34b0a3c2439c34aba5d221ae2, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cba5558e5acc7747a496878680e19f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glideMoveSpd: 0
-  gliding: 0
-  cantMove: 0
-  fireRateIceBall: 0.5
-  shootIce: 102
-  momventKey: 113
-  iceBolt: {fileID: 4985355355518078, guid: 230a427431ed6834f84740b7fd0291c3, type: 2}
+  IceBFireRate: 0.5
+  IceBSpwnP: {fileID: 4194749122237166}
+  IceBSpwnR: {fileID: 4083676277243064}
+  iceBolt: {fileID: 1109561660084434, guid: 230a427431ed6834f84740b7fd0291c3, type: 2}
 --- !u!114 &114468114410075722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -248,17 +245,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0f0c9ed9f421246beee35bd03f3d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charClass: 1
   moveSpeed: 5
   jumpForce: 20
   tForSprint: 0
   CurMoveSpeed: 0
   walking: 0
   sprinting: 0
-  isStaggered: 0
   movAbltyEnabled: 0
+  isSlowed: 0
+  isStaggered: 0
   left: 97
   right: 100
+  momventKey: 113
   jump: 32
+  attack: 102
   AC: {fileID: 114634764954675836}
   hs: {fileID: 114856490554960958}
 --- !u!212 &212134258595071286
