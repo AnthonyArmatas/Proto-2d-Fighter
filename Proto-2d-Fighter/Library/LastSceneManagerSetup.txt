@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/fireCharDevTest.unity
+- path: Assets/_Scenes/4-20-2018_Ice_testScene.unity
   isLoaded: 1
   isActive: 1

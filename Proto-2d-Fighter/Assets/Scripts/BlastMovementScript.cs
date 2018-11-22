@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlastMovementScript : MonoBehaviour {
+public class BlastMovementScript {
     //Trying to adapt the code from Fire Character Player Controller
     public bool charging = false;
     public bool exploding = false;
@@ -20,12 +20,14 @@ public class BlastMovementScript : MonoBehaviour {
 
     public void BlastMove(AimController AC, Rigidbody2D theRB, KeyCode movementKey, float explosionCounter)
     {
-        charging = false;
+        //charging = false;
         //explosionCounter = Time.deltaTime - explosionCounter;
         //Need to add a counter timer to get these to go off at the appropriate time.
-
+        Debug.Log("Hit BlastMove");
         if (explosionCounter <= 1)
         {
+            Debug.Log(explosionCounter);
+
             blastVelocity = 5;
             Debug.Log("jumped");
         }
@@ -42,42 +44,47 @@ public class BlastMovementScript : MonoBehaviour {
 
 
 
+        //theRB.transform.localEulerAngles = new Vector3(10f, 10f, AC.angle);
+        Vector2 tempVec = new Vector2(theRB.transform.position.x + 5f, theRB.transform.position.x + .05f);
+        theRB.AddForce(tempVec);
 
-
-        Vector3[] lArcPos = CalculateArcArray();
+        //Vector3[] lArcPos = CalculateArcArray(AC);
         //the arc positions are global and referred back to everytime a fixed update happens
         //in this file but I want them to be written over everytime a new arc needs to be made
-        arcPos = lArcPos;
-        curArcPos = 0;
-        Debug.Log(explosionCounter);
-        explosionCounter = 0;
+        //arcPos = lArcPos;
+        // curArcPos = 0;
+        //Debug.Log("explosionCounter");
+        //Debug.Log(explosionCounter);
+        //explosionCounter = 0;
+
+
         exploding = true;
 
     }
 
-    ////Create an array of vector three positions for arc
-    //Vector3[] CalculateArcArray(AimController AC)
-    //{
-    //    Vector3[] arcArray = new Vector3[resolution + 1];
+    //Create an array of vector three positions for arc
+    Vector3[] CalculateArcArray(AimController AC)
+    {
+        Vector3[] arcArray = new Vector3[resolution + 1];
 
-    //    radianAngle = Mathf.Deg2Rad * AC.angle;
+        radianAngle = Mathf.Deg2Rad * AC.angle;
 
-    //    float maxDistance = (blastVelocity * blastVelocity * Mathf.Sin(2 * radianAngle) / g);
+        float maxDistance = (blastVelocity * blastVelocity * Mathf.Sin(2 * radianAngle) / g);
 
-    //    for (int i = 0; i <= resolution; i++)
-    //    {
-    //        float t = (float)i / (float)resolution;
-    //        arcArray[i] = CalculateArcPoint(t, maxDistance);
-    //    }
-    //    return arcArray;
-    //}
+        for (int i = 0; i <= resolution; i++)
+        {
+            float t = (float)i / (float)resolution;
+            arcArray[i] = CalculateArcPoint(t, maxDistance);
+        }
+        return arcArray;
+    }
 
-    ////calculate height and distance of each vertex
-    //Vector3 CalculateArcPoint(float t, float maxDistance)
-    //{
-    //    float x = t * maxDistance;
-    //    float y = x * Mathf.Tan(radianAngle) - ((g * x * x) / (2 * blastVelocity * blastVelocity * Mathf.Cos(radianAngle) * Mathf.Cos(radianAngle)));
+    //calculate height and distance of each vertex
+    Vector3 CalculateArcPoint(float t, float maxDistance)
+    {
+        float x = t * maxDistance;
+        float y = x * Mathf.Tan(radianAngle) - ((g * x * x) / (2 * blastVelocity * blastVelocity * Mathf.Cos(radianAngle) * Mathf.Cos(radianAngle)));
 
-    //    return new Vector3(x, y);
-    //}
+        return new Vector3(x, y);
+    }
 }

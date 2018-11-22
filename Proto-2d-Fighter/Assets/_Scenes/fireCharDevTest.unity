@@ -150,8 +150,11 @@ MonoBehaviour:
   movementKey: 113
   jump: 32
   attack: 102
-  AC: {fileID: 1203315038}
+  AC: {fileID: 958105743}
   hs: {fileID: 19755646}
+  charging: 0
+  exploding: 0
+  midPloding: 0
 --- !u!1 &45015866
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2080,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.375, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &958105743 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114125818179349488, guid: 8f683a4eda8465c4281b75fbd230fab7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1441746293}
+  m_Script: {fileID: 11500000, guid: 09c257167cbf78e4687921d3bd8cdc75, type: 3}
 --- !u!1 &1072807685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2452,12 +2461,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4375, y: 0.4375}
   m_EdgeRadius: 0
---- !u!114 &1203315038 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114125818179349488, guid: 8f683a4eda8465c4281b75fbd230fab7,
-    type: 2}
-  m_PrefabInternal: {fileID: 1441746293}
-  m_Script: {fileID: 11500000, guid: 09c257167cbf78e4687921d3bd8cdc75, type: 3}
 --- !u!1 &1334082554
 GameObject:
   m_ObjectHideFlags: 0

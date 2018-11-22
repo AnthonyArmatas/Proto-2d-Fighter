@@ -97,9 +97,25 @@ public class genericPlayerController : MonoBehaviour {
         {
             moveRight();
         }
-        else if (Input.GetKey(movementKey))
+        else if (Input.GetKey(movementKey) || charging == true)
         {
-            toggleSpclMove();
+            switch (charClass)
+            {
+                case 1:
+                    toggleIce();
+                    break;
+                case 2:
+                    updateToggleBlast();
+                    break;
+                case 3:
+                    toggleSwing();
+                    break;
+                case 4:
+                    togglePhase();
+                    break;
+                default:
+                    return;
+            }
         }
         else if (movAbltyEnabled != true)
         {
@@ -113,6 +129,9 @@ public class genericPlayerController : MonoBehaviour {
         {
             if (isSlowed)
             {
+                //Instread of changing the velocity maybe adding force would be better.
+                // Add force to the cloned object in the object's forward direction
+                //clone.rigidbody.AddForce(clone.transform.forward * shootForce);
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce / 2);
             }
             else
@@ -309,6 +328,7 @@ public class genericPlayerController : MonoBehaviour {
     public void blastMovement()
     {
         BlastMovementScript bms = new BlastMovementScript();
+        movAbltyEnabled = false;
         bms.BlastMove(AC, theRB, movementKey, explosionCounter);
     }
     public void swingMovement()
@@ -328,7 +348,7 @@ public class genericPlayerController : MonoBehaviour {
                 toggleIce();
                 break;
             case 2:
-                toggleBlast();
+                //toggleBlast();
                 break;
             case 3:
                 toggleSwing();
@@ -363,26 +383,54 @@ public class genericPlayerController : MonoBehaviour {
             iceMovement();
         }
     }
-    public void toggleBlast()
+    public void updateToggleBlast()
     {
-        if (Input.GetKeyDown(movementKey)) // GetKeyDown tracks the intial press not that it is held down
+        if (charging == true)
         {
-            if (charging == true)
+            if (Input.GetKeyUp(movementKey))
             {
-                Debug.Log(explosionCounter);
+                charging = false;
+                movAbltyEnabled = true;
             }
             else
             {
-                charging = true;
-                explosionCounter += Time.deltaTime;
-                Debug.Log(explosionCounter);
+                explosionCounter += Time.deltaTime; //incriments the counterB
+                // Debug.Log("Charging-eplosionCounter");
+                // Debug.Log(explosionCounter);
             }
         }
-        else if (Input.GetKeyUp(movementKey))
+        else
         {
-            charging = false;
-            blastMovement();
+            if (Input.GetKeyDown(movementKey)) // GetKeyDown tracks the intial press not that it is held down
+            {
+                charging = true;
+                //Debug.Log("Pre-eplosionCounter");
+                //Debug.Log(explosionCounter);
+                explosionCounter = Time.deltaTime; //Starts the counter
+                //Debug.Log("Post-explosionCounter");
+                //Debug.Log(explosionCounter);
+            }
         }
+    }
+
+    public void toggleBlast()
+    {
+        //if (charging == false)             //All of this functionality should be done in update not fixed update. Fixed update should only deal with the actual physics
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    if (Input.GetKeyDown(movementKey)) // GetKeyDown tracks the intial press not that it is held down
+        //    {
+        //        Debug.Log(explosionCounter);
+        //    }
+        //    else if (Input.GetKeyUp(movementKey))
+        //    {
+        //        charging = false;
+        //        blastMovement();
+        //    }
+        //}
     }
     public void toggleSwing()
     {
