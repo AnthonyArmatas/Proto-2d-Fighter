@@ -234,6 +234,7 @@
     <Compile Include="Assets\Scripts\IceAbilityScript.cs" />
     <Compile Include="Assets\Scripts\IceAttackController.cs" />
     <Compile Include="Assets\Scripts\IceAttacktScript.cs" />
+    <Compile Include="Assets\Scripts\IceCharacterMovement.cs" />
     <Compile Include="Assets\Scripts\IceMovementScript.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\PlayerBaseMovement.cs" />
