@@ -8,6 +8,7 @@ TagManager:
   - Player_2
   - Attack
   - Terrain
+  - Node
   layers:
   - Default
   - TransparentFX

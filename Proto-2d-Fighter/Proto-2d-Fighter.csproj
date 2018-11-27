@@ -237,13 +237,20 @@
     <Compile Include="Assets\Scripts\IceCharacterMovement.cs" />
     <Compile Include="Assets\Scripts\IceMovementScript.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
+    <Compile Include="Assets\Scripts\NodeCollectionScript.cs" />
     <Compile Include="Assets\Scripts\NodeMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerBaseMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Retired_Scripts\IceMageControllerScript.cs" />
     <Compile Include="Assets\Scripts\Retired_Scripts\IceSpikeControllerScript.cs" />
+    <Compile Include="Assets\Scripts\ScoreScript.cs" />
     <Compile Include="Assets\Scripts\SelectionScript.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Low Poly UI Kit - v.1.1c\README.txt" />
+    <None Include="Assets\Low Poly UI Kit - v.1.1c\UI Kit\AI Files\README.txt" />
+    <None Include="Assets\Low Poly UI Kit - v.1.1c\UI Kit\Font\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
