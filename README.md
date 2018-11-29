@@ -1,2 +1,4 @@
-# Proto-2d-Fighter
-Repo to test ideas for my fighting brawler game.
+# NOW SWATTER
+Was "Proto-2d-Fighter"
+
+This repo contains my competitive, movement based, node chasing game.
