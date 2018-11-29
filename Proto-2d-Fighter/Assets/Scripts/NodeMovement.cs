@@ -18,6 +18,7 @@ public class NodeMovement : MonoBehaviour {
     // Use this for initialization
     void Start () {
         waitTime = startWaitTime;
+        moveSpots = GameObject.Find("MoveSpot").transform;
 
         moveSpots.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY)); //Sets the first position
     }

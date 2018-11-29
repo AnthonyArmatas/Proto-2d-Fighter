@@ -5,7 +5,7 @@ using UnityEngine;
 public class NodeCollectionScript : MonoBehaviour {
 
     public ScoreScript gameScore;
-
+    public GameObject Node;
 
     // Use this for initialization
     void Start () {
@@ -22,8 +22,12 @@ public class NodeCollectionScript : MonoBehaviour {
         if (coll.gameObject.tag == "Node")
         {
             gameScore.SendMessage("UpdateScore");
+
+
             DestroyObject(coll.gameObject);
-            Instantiate(coll.gameObject, new Vector2(0,0), Quaternion.identity);
+            Invoke("RespawnNode", 1.5f);            
+
+
         }
         /*else if (coll.gameObject.tag == "Slow")
         {
@@ -33,4 +37,10 @@ public class NodeCollectionScript : MonoBehaviour {
             Debug.Log(gameObject.tag);
 
     }
+
+    private void RespawnNode()
+    {
+        Instantiate(Node, new Vector2(0, 0), Quaternion.identity);
+    }
+
 }

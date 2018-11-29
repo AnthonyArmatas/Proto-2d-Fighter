@@ -1705,6 +1705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameScore: {fileID: 0}
+  Node: {fileID: 1867468526209160, guid: c7a778af607632b4b8cdc7a6f3d1f05f, type: 2}
 --- !u!1 &360324105
 GameObject:
   m_ObjectHideFlags: 0
@@ -4931,7 +4932,7 @@ Prefab:
         type: 2}
       propertyPath: moveSpots
       value: 
-      objectReference: {fileID: 95595638}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7a778af607632b4b8cdc7a6f3d1f05f, type: 2}
   m_IsPrefabParent: 0

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/11-25-2018_Node_Map.unity
+- path: Assets/_Scenes/CharacterSelectScreen.unity
   isLoaded: 1
   isActive: 1
