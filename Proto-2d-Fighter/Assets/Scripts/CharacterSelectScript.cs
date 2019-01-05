@@ -8,6 +8,9 @@ public class CharacterSelectScript : MonoBehaviour {
 
     //This script will only be used to change the visual representation of the users selector.
     //PCtrlCharSeleScript Will handle the actual calculation
+    string nameWalker = "Character";
+    string p1Overlay = "P1Player_Overlay_transparent";
+    string p2Overlay = "P2Player_Overlay_transparent";
     void Start () {
         SetInitialSelectorPlacement();
     }
@@ -19,9 +22,7 @@ public class CharacterSelectScript : MonoBehaviour {
 
     private void SetInitialSelectorPlacement()
     {
-        string nameWalker = "Character";
-        string p1Overlay = "P1Player_Overlay_transparent";
-        string p2Overlay = "P2Player_Overlay_transparent";
+        
         //this.gameObject.transform.GetChild(0).Find(p1Overlay).gameObject.SetActive(true);
         //this.gameObject.transform.GetChild(0).Find(p2Overlay).gameObject.SetActive(true);
         this.gameObject.transform.Find(nameWalker + '1').Find(p1Overlay).gameObject.SetActive(true);
@@ -34,20 +35,57 @@ public class CharacterSelectScript : MonoBehaviour {
         }
     }
 
-    private void moveLeft()
-    {
 
+    private void moveSelector(int[] selectData)
+    {
+        //selectData passes in three values
+        // 0 = curPos
+        // 1 = newPos
+        // 2 = player
+        if (selectData[2] == 1)
+        {
+            this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p1Overlay).gameObject.SetActive(false);
+            this.gameObject.transform.Find(nameWalker + selectData[1]).Find(p1Overlay).gameObject.SetActive(true);
+
+        }
+        else if (selectData[2] == 2)
+        {
+            this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p2Overlay).gameObject.SetActive(false);
+            this.gameObject.transform.Find(nameWalker + selectData[1]).Find(p2Overlay).gameObject.SetActive(true);
+        }
     }
-    private void moveright()
+    private void lockSelection(int[] selectData)
     {
+        //selectData passes in three values
+        // 0 = curPos
+        // 1 = player
+        if (selectData[1] == 1)
+        {
+            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p1Overlay).gameObject.GetComponent<SpriteRenderer>();
+            sr.color = new Color(9, 255, 0, 255);
 
+        }
+        else if (selectData[1] == 2)
+        {
+            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p2Overlay).gameObject.GetComponent<SpriteRenderer>();
+            sr.color = new Color(9, 255, 0, 255);
+        }
     }
-    private void moveUp()
+    private void unlockSelection(int[] selectData)
     {
+        //selectData passes in three values
+        // 0 = curPos
+        // 1 = player    
+        if (selectData[1] == 1)
+        {
+            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p1Overlay).gameObject.GetComponent<SpriteRenderer>();
+            sr.color = new Color(255, 255, 255, 255);
 
-    }
-    private void moveDown()
-    {
-
+        }
+        else if (selectData[1] == 2)
+        {
+            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p2Overlay).gameObject.GetComponent<SpriteRenderer>();
+            sr.color = new Color(255, 255, 255, 255);
+        }
     }
 }

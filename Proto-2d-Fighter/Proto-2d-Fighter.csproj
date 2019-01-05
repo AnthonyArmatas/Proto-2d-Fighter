@@ -236,17 +236,20 @@
     <Compile Include="Assets\Scripts\IceAttacktScript.cs" />
     <Compile Include="Assets\Scripts\IceCharacterMovement.cs" />
     <Compile Include="Assets\Scripts\IceMovementScript.cs" />
+    <Compile Include="Assets\Scripts\MenuNavScript.cs" />
     <Compile Include="Assets\Scripts\MenuScript.cs" />
     <Compile Include="Assets\Scripts\NodeCollectionScript.cs" />
     <Compile Include="Assets\Scripts\NodeMovement.cs" />
     <Compile Include="Assets\Scripts\PCtrlCharSeleScript.cs" />
     <Compile Include="Assets\Scripts\PlayerBaseMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\QuitMenuNavScript.cs" />
     <Compile Include="Assets\Scripts\Retired_Scripts\IceMageControllerScript.cs" />
     <Compile Include="Assets\Scripts\Retired_Scripts\IceSpikeControllerScript.cs" />
     <Compile Include="Assets\Scripts\ScoreScript.cs" />
     <Compile Include="Assets\Scripts\SelectionScript.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
+    <Compile Include="Assets\Scripts\StaticInfoScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Low Poly UI Kit - v.1.1c\README.txt" />

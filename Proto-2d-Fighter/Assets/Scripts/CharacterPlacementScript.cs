@@ -21,12 +21,12 @@ public class CharacterPlacementScript : MonoBehaviour {
         spriteImg = gameObject.GetComponent<SpriteRenderer>();//.sprite = CSS.spriteList[0];
         charPanel = gameObject;
         //Debug.Log("Currents name " + charPanel.name);
-        for(int i = 0; i < CSS.spriteList.Length;i++){
+       /* for(int i = 0; i < CSS.spriteList.Length;i++){
             if (charPanel.name.Equals("Character" + (i+1)))
             {
                 spriteImg.sprite = CSS.spriteList[i];
             }
-        }
+        } */
 
         //spriteImg.sprite = CSS.spriteList[1];
 

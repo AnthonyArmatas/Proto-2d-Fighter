@@ -418,7 +418,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 384242001}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 1.28, y: 0.65, z: 1}
   m_Children: []
   m_Father: {fileID: 227078211}
@@ -650,6 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 920635038}
   - component: {fileID: 920635039}
+  - component: {fileID: 920635040}
   m_Layer: 0
   m_Name: CharacterFrameHolder
   m_TagString: Untagged
@@ -685,7 +686,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975af6ed2fb0868418ae8c72f6d8e40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteList: []
+--- !u!114 &920635040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 920635037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc85f133f562564cb200d89549a30f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p1Up: 119
+  p1Down: 115
+  p1Left: 97
+  p1Right: 100
+  p1LockIn: 110
+  p1Backout: 109
+  p2Up: 273
+  p2Down: 274
+  p2Left: 276
+  p2Right: 275
+  p2LockIn: 256
+  p2Backout: 266
+  css: {fileID: 920635039}
 --- !u!1 &931380652
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +733,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 931380652}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 0.75, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 651450901}
@@ -928,7 +952,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1033445133}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 0.926, y: 0.556, z: 1}
   m_Children: []
   m_Father: {fileID: 1894454122}
@@ -988,7 +1012,7 @@ GameObject:
   - component: {fileID: 1089429486}
   - component: {fileID: 1089429487}
   m_Layer: 0
-  m_Name: SpritePositionHolder (1)
+  m_Name: SpritePositionHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1274,7 +1298,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1217173838}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1089429486}
@@ -1931,7 +1955,7 @@ GameObject:
   - component: {fileID: 1894454122}
   - component: {fileID: 1894454123}
   m_Layer: 0
-  m_Name: SpritePositionHolder (2)
+  m_Name: SpritePositionHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
