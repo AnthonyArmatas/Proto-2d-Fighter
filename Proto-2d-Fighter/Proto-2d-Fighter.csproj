@@ -226,7 +226,9 @@
     <Compile Include="Assets\Scripts\BlastMovementScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\CharacterPlacementScript.cs" />
+    <Compile Include="Assets\Scripts\CharacterSelectContScript.cs" />
     <Compile Include="Assets\Scripts\CharacterSelectScript.cs" />
+    <Compile Include="Assets\Scripts\CharacterSelectVisualScript.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\fireCharacterPlayerController.cs" />
     <Compile Include="Assets\Scripts\genericPlayerController.cs" />

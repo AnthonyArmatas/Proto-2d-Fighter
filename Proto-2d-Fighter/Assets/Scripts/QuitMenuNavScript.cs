@@ -6,16 +6,15 @@ using UnityEngine.EventSystems;
 
 public class QuitMenuNavScript : MonoBehaviour {
 
-    public Button curButton;
-    public Button yesQuit;
-    public Button noQuit;
-
     private KeyCode p1Left = StaticInfoScript.p1Left;
     private KeyCode p1Right = StaticInfoScript.p1Right;
     private KeyCode p1LockIn = StaticInfoScript.p1LockIn;
     private KeyCode p1Backout = StaticInfoScript.p1Backout;
     private Button[] allButtons;
-    private MenuNavScript mns;
+
+    public Button curButton;
+    public Button yesQuit;
+    public Button noQuit;
 
 
 
@@ -24,7 +23,6 @@ public class QuitMenuNavScript : MonoBehaviour {
         allButtons = this.gameObject.GetComponentsInChildren<Button>();
         yesQuit = allButtons[0];
         noQuit = allButtons[1];
-        mns = GameObject.Find("StartMenu").GetComponent<MenuNavScript>();
     }
 
 

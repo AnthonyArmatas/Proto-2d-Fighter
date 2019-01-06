@@ -17,6 +17,9 @@ public class StaticInfoScript : MonoBehaviour {
     static public KeyCode p2Right = KeyCode.RightArrow;
     static public KeyCode p2LockIn = KeyCode.Keypad0;
     static public KeyCode p2Backout = KeyCode.KeypadPeriod;
+    static public int p1CharacterChoice;
+    static public int p2CharacterChoice;
+
 
 
     // Use this for initialization

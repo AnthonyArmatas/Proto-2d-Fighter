@@ -1,91 +1,80 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 public class CharacterSelectScript : MonoBehaviour {
 
-    //This script will only be used to change the visual representation of the users selector.
+    //This script will handle the overarching selection of characters.
     //PCtrlCharSeleScript Will handle the actual calculation
-    string nameWalker = "Character";
-    string p1Overlay = "P1Player_Overlay_transparent";
-    string p2Overlay = "P2Player_Overlay_transparent";
+    //CharacterSelectVisualScript Will handle the visual changes
+    public Canvas continueMenu;
+    public PCtrlCharSeleScript PCCS;
+    public CharacterSelectVisualScript CSVS;
+    public CharacterSelectContScript CSCS;
+
+
     void Start () {
-        SetInitialSelectorPlacement();
+        continueMenu = GameObject.Find("ContinueMenu").GetComponent<Canvas>();
+        continueMenu.enabled = false;
+        PCCS = GetComponent<PCtrlCharSeleScript>();
+        CSVS = GetComponent<CharacterSelectVisualScript>();
+        CSCS = GameObject.Find("ContinueMenu").GetComponent<CharacterSelectContScript>();
+
     }
 
     void Update()
     {
+        if(PCCS.p1Locked == true && PCCS.p2Locked == true && continueMenu.enabled == false)
+        {
+            //Shows the continue canvas
+            continueMenu.enabled = true;
+            //Disables the selectiopn script and enables the continue script
+            CSCS.enabled = !CSCS.enabled;
+            PCCS.enabled = !PCCS.enabled;
+            //This eventsystem makes sure the new canvas highlights yes
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("YesContinueButton"));
 
+        }
     }
 
-    private void SetInitialSelectorPlacement()
+
+    public void NotReadyPress()
     {
-        
-        //this.gameObject.transform.GetChild(0).Find(p1Overlay).gameObject.SetActive(true);
-        //this.gameObject.transform.GetChild(0).Find(p2Overlay).gameObject.SetActive(true);
-        this.gameObject.transform.Find(nameWalker + '1').Find(p1Overlay).gameObject.SetActive(true);
-        this.gameObject.transform.Find(nameWalker + '1').Find(p2Overlay).gameObject.SetActive(true);
 
-        for(int i = 2; i <= 4; i++)
-        {
-            this.gameObject.transform.Find(nameWalker + i).Find(p1Overlay).gameObject.SetActive(false);
-            this.gameObject.transform.Find(nameWalker + i).Find(p2Overlay).gameObject.SetActive(false);
-        }
+        //Hides the continue canvas
+        continueMenu.enabled = false;
+        //This eventsystem makes sure the focus is on the character select canvas and the controller input is not read by the characterselectcontscript
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("CharacterFrameHolder"));
+        //Disables the continue script and reenables the selectiopn script
+        CSCS.enabled = !CSCS.enabled;
+        PCCS.enabled = !PCCS.enabled;
+        //Sends a message to functionally unlock the selectors
+        PCCS.p1Locked = false;
+        PCCS.p2Locked = false;
+        //Sends a message to visually unlock the selectors
+        CSVS.SendMessage("unlockSelection", new int[] { PCCS.p1CharSelector, 1 });
+        CSVS.SendMessage("unlockSelection", new int[] { PCCS.p2CharSelector, 2 });
     }
 
-
-    private void moveSelector(int[] selectData)
+    public void RdyToCont()
     {
-        //selectData passes in three values
-        // 0 = curPos
-        // 1 = newPos
-        // 2 = player
-        if (selectData[2] == 1)
-        {
-            this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p1Overlay).gameObject.SetActive(false);
-            this.gameObject.transform.Find(nameWalker + selectData[1]).Find(p1Overlay).gameObject.SetActive(true);
+        //Debug.Log("P1 Choose Character Before: " + StaticInfoScript.p1CharacterChoice);
+        //Debug.Log("P2 Choose Character Before: " +  StaticInfoScript.p2CharacterChoice);
+        //This sets the chosen characters in the static script to place later
+        StaticInfoScript.p1CharacterChoice = PCCS.p1CharSelector;
+        StaticInfoScript.p2CharacterChoice = PCCS.p2CharSelector;
+        //Debug.Log("P1 Choose Character After: " + StaticInfoScript.p1CharacterChoice);
+        //Debug.Log("P2 Choose Character After: " + StaticInfoScript.p2CharacterChoice);
 
-        }
-        else if (selectData[2] == 2)
-        {
-            this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p2Overlay).gameObject.SetActive(false);
-            this.gameObject.transform.Find(nameWalker + selectData[1]).Find(p2Overlay).gameObject.SetActive(true);
-        }
     }
-    private void lockSelection(int[] selectData)
+
+        public void backPress()
     {
-        //selectData passes in three values
-        // 0 = curPos
-        // 1 = player
-        if (selectData[1] == 1)
-        {
-            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p1Overlay).gameObject.GetComponent<SpriteRenderer>();
-            sr.color = new Color(9, 255, 0, 255);
-
-        }
-        else if (selectData[1] == 2)
-        {
-            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p2Overlay).gameObject.GetComponent<SpriteRenderer>();
-            sr.color = new Color(9, 255, 0, 255);
-        }
+        SceneManager.LoadScene("intro");
     }
-    private void unlockSelection(int[] selectData)
-    {
-        //selectData passes in three values
-        // 0 = curPos
-        // 1 = player    
-        if (selectData[1] == 1)
-        {
-            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p1Overlay).gameObject.GetComponent<SpriteRenderer>();
-            sr.color = new Color(255, 255, 255, 255);
 
-        }
-        else if (selectData[1] == 2)
-        {
-            SpriteRenderer sr = this.gameObject.transform.Find(nameWalker + selectData[0]).Find(p2Overlay).gameObject.GetComponent<SpriteRenderer>();
-            sr.color = new Color(255, 255, 255, 255);
-        }
-    }
+
 }
