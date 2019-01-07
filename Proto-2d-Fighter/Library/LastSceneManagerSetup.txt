@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/CharacterSelectScreen.unity
+- path: Assets/_Scenes/LevelSelectScreen.unity
   isLoaded: 1
   isActive: 1
