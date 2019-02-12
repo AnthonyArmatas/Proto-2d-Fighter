@@ -19,6 +19,7 @@ public class StaticInfoScript : MonoBehaviour {
     static public KeyCode p2Backout = KeyCode.KeypadPeriod;
     static public int p1CharacterChoice;
     static public int p2CharacterChoice;
+    static public int levelChoice;
 
 
 

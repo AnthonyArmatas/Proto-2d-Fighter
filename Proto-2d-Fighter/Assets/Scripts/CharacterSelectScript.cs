@@ -68,10 +68,11 @@ public class CharacterSelectScript : MonoBehaviour {
         StaticInfoScript.p2CharacterChoice = PCCS.p2CharSelector;
         //Debug.Log("P1 Choose Character After: " + StaticInfoScript.p1CharacterChoice);
         //Debug.Log("P2 Choose Character After: " + StaticInfoScript.p2CharacterChoice);
+        SceneManager.LoadScene("LevelSelectScreen");
 
     }
 
-        public void backPress()
+    public void backPress()
     {
         SceneManager.LoadScene("intro");
     }

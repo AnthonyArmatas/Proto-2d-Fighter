@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/CharacterSelectScreen.unity
     guid: 4fb6beb6dd4b07941a3aa4fe6e9390e4
+  - enabled: 1
+    path: Assets/_Scenes/LevelSelectScreen.unity
+    guid: 2f36eba0d66ba41468dcb56217de0163

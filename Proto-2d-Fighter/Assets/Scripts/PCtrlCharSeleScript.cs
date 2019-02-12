@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 
 public class PCtrlCharSeleScript : MonoBehaviour {
+
     //This script will handle the actual calculation of the character.
     //CharacterSelectVisualScript Will handle the visual changes
     private KeyCode p1Up        = StaticInfoScript.p1Up;
@@ -32,8 +33,6 @@ public class PCtrlCharSeleScript : MonoBehaviour {
 
     public CharacterSelectVisualScript CSVS;
 
-
-
     //Character selection by direction
     //IceRider  = 1
     //Blaster   = 2
@@ -44,6 +43,7 @@ public class PCtrlCharSeleScript : MonoBehaviour {
     //left is -1
     //up is -2
     // Use this for initialization
+
     void Start () {
         p1CharSelector = 1;
         p2CharSelector = 1;
@@ -56,7 +56,6 @@ public class PCtrlCharSeleScript : MonoBehaviour {
         p1OnBackBut = false;
         p2OnBackBut = false;
         justPressed = 0;
-
     }
 	
 	// Update is called once per frame
@@ -163,6 +162,7 @@ public class PCtrlCharSeleScript : MonoBehaviour {
                 p1CharSelector = updateNewPos(p1CharSelector, 1);
                 selectData[1] = p1CharSelector;
             }
+
             CSVS.SendMessage("moveSelector", selectData);
         }
 
@@ -319,12 +319,11 @@ public class PCtrlCharSeleScript : MonoBehaviour {
 
     }
 
-    void updateJustPressed() { 
-    
+    void updateJustPressed()
+    { 
         //Debug.Log(justPressed);
         justPressed = justPressed + Time.deltaTime;
         //Debug.Log(justPressed);
-
     }
 
 }

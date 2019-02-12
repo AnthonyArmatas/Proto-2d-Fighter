@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/LevelSelectScreen.unity
+- path: Assets/_Scenes/02-11-2019_ScriptSpawn_Test_Map.unity
   isLoaded: 1
   isActive: 1
