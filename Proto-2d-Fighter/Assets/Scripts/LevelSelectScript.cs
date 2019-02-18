@@ -56,9 +56,25 @@ public class LevelSelectScript : MonoBehaviour {
         //This sets the chosen level in the static script to place later
         StaticInfoScript.levelChoice = PLCS.lvlSelector;
         Debug.Log("Level Choosen: " + StaticInfoScript.levelChoice);
-        Debug.Log("SceneManager.LoadScene(\"genLevel\");");
-        //SET AFTER GENLEVEL SCRIPT IS CREATED. CHANGE LOADSCRENE TO SCENES NAME OR MAKE GENLEVELSCENE WHICH GENERATES A LEVEL
-        //SceneManager.LoadScene("genLevel");
+        //Change Names to new levels as created
+        switch (StaticInfoScript.levelChoice)
+        {
+            case 1:
+                Debug.Log("Loaded case 1");
+                SceneManager.LoadScene("genLevel");
+                break;
+            case 2:
+                Debug.Log("Loaded case 2");
+                SceneManager.LoadScene("genLevel");
+                break;
+            case 3:
+                Debug.Log("Loaded case 3");
+                SceneManager.LoadScene("genLevel");
+                break;
+            default:
+                Debug.Log("Loaded default case level");
+                break;
+        }
 
     }
     public void backPress()

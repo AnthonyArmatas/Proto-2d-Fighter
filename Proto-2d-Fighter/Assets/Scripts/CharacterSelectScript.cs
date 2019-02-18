@@ -66,6 +66,8 @@ public class CharacterSelectScript : MonoBehaviour {
         //This sets the chosen characters in the static script to place later
         StaticInfoScript.p1CharacterChoice = PCCS.p1CharSelector;
         StaticInfoScript.p2CharacterChoice = PCCS.p2CharSelector;
+        Debug.Log("Player1 chose character: " + StaticInfoScript.p1CharacterChoice);
+        Debug.Log("Player2 chose character: " + StaticInfoScript.p2CharacterChoice);
         //Debug.Log("P1 Choose Character After: " + StaticInfoScript.p1CharacterChoice);
         //Debug.Log("P2 Choose Character After: " + StaticInfoScript.p2CharacterChoice);
         SceneManager.LoadScene("LevelSelectScreen");
