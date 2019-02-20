@@ -231,6 +231,7 @@
     <Compile Include="Assets\Scripts\CharacterSelectVisualScript.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\fireCharacterPlayerController.cs" />
+    <Compile Include="Assets\Scripts\GameHandlerScript.cs" />
     <Compile Include="Assets\Scripts\genericPlayerController.cs" />
     <Compile Include="Assets\Scripts\HealthScript.cs" />
     <Compile Include="Assets\Scripts\IceAbilityScript.cs" />

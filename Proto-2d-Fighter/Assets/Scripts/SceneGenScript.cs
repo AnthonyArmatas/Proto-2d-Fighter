@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
+
 
 public class SceneGenScript : MonoBehaviour {
     float waitTime;
@@ -13,6 +15,8 @@ public class SceneGenScript : MonoBehaviour {
 
     GameObject player1;
     GameObject player2;
+    GameObject Node;
+    GameObject newNode;
     GameObject spawnedPlayer1;
     GameObject spawnedPlayer2;
     GameObject CountDownHolder;
@@ -26,9 +30,7 @@ public class SceneGenScript : MonoBehaviour {
     {
         player1 = SetPlayerChar(1);
         player2 = SetPlayerChar(2);
-
-        //Instantiate(player1, GetSpawnLocation(1).position, Quaternion.Euler(0, 0, 0));
-        //Instantiate(player2, GetSpawnLocation(2).position, Quaternion.Euler(0, 180, 0));
+        Node = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/prefab/Node.prefab");
         Debug.Log("Calling beginCountDown");
         beginCountDown();
     }
@@ -71,7 +73,6 @@ public class SceneGenScript : MonoBehaviour {
             selectedCharacter = StaticInfoScript.p2CharacterChoice;
         }
 
-//        switch (selectedCharacter)
         switch (1)
         {
             case 1:
@@ -143,21 +144,13 @@ public class SceneGenScript : MonoBehaviour {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Go through and:
-    // Either create an array of names ex:{IceRider_p1, Blaster_p1, Swinger_p1, ect} for p1 and p2 
-    // and have a check which enables and disables all of both at 3 and start respectivly
-    // or figure somthing out with regex. 
-    // Clean up this code.
-    // When done remove the temp dev changes in getPrefab
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void continueCountDown(GameObject cd_CurTime_Sprite) 
     {
-        if(waitTime <= 0)
+        string[] posPlayer1Names = { "IceRider_p1", "Blaster_p1", "Swinger_p1", "Phaser_p1" };
+        string[] posPlayer2Names = { "IceRider_p2", "Blaster_p2", "Swinger_p2", "Phaser_p2" };
+
+        // Gets hit when the wait time is up
+        if (waitTime <= 0)
         {
             Debug.Log(waitTime);
             waitTime = waitTimeLength;
@@ -169,9 +162,8 @@ public class SceneGenScript : MonoBehaviour {
             if (cd_CurTime_Sprite.name == "C_D_3")
             {
                 spawnedPlayer1 = Instantiate(player1, GetSpawnLocation(1).position, Quaternion.Euler(0, 0, 0));
-                //Help Differentiate the characters and set their names to be called if needed later
                 spawnedPlayer1.name = player1.name + "_p1";
-                if(spawnedPlayer1.name == "IceRider_p1")
+                if(posPlayer1Names.Contains(spawnedPlayer1.name))
                 {
                     spawnedPlayer1.GetComponent<IceCharacterMovement>().enabled = false;
                 }
@@ -179,27 +171,37 @@ public class SceneGenScript : MonoBehaviour {
             else if (cd_CurTime_Sprite.name == "C_D_2")
             {
                 spawnedPlayer2 = Instantiate(player2, GetSpawnLocation(2).position, Quaternion.Euler(0, 180, 0));
-                //Help Differentiate the characters and set their names to be called if needed later
                 spawnedPlayer2.name = player2.name + "_p2";
+                if (posPlayer2Names.Contains(spawnedPlayer2.name))
+                {
+                    spawnedPlayer2.GetComponent<IceCharacterMovement>().enabled = false;
+                }
             }
             else if(cd_CurTime_Sprite.name == "C_D_1")
             {
-                
+                newNode = Instantiate(Node, new Vector2(0,0), Quaternion.Euler(0, 0, 0));
+                //Removes the clone from the end of the node name
+                newNode.name = Node.name;
+                newNode.GetComponent<NodeMovement>().enabled = false;
             }
             else if(cd_CurTime_Sprite.name == "C_D_Start")
             {
                 Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Debug.Log(spawnedPlayer1.name);
-                if (spawnedPlayer1.name == "IceRider_p1")
+                if (posPlayer1Names.Contains(spawnedPlayer1.name))
                 {
-                    
                     spawnedPlayer1.GetComponent<IceCharacterMovement>().enabled = true;
                 }
+                if (posPlayer2Names.Contains(spawnedPlayer2.name))
+                {
+                    spawnedPlayer2.GetComponent<IceCharacterMovement>().enabled = true;
+                }
+                newNode.GetComponent<NodeMovement>().enabled = true;
                 countDownFinished = true;
             }
         }
-        else
+        else //Gets called if the wait time is not up
         {
             if(showNewSprite == true)
             {

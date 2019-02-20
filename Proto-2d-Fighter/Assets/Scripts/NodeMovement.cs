@@ -10,7 +10,7 @@ public class NodeMovement : MonoBehaviour {
 
     public Transform moveSpots;     //Maybe change this into a matrix (With each map passing in their specific matrix). With each value [0][*] having its corrisponding positions [*][0] so it does not pass through terrain
                                     //This would be a semi stop gap between implimenting roaming movement which bounces off terrian. This would prevent it from getting stuck while still allowing it to be at least semi random.
-    public float minX;  //The bounds of the node
+    public float minX;              //The bounds of the node
     public float maxX;
     public float minY;
     public float maxY;
