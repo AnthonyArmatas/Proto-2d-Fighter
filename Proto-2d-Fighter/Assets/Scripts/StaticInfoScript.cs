@@ -20,8 +20,25 @@ public class StaticInfoScript : MonoBehaviour {
     static public int p1CharacterChoice;
     static public int p2CharacterChoice;
     static public int levelChoice;
+    static public string levelChoiceName;
+    static public int p1curScore;
+    static public int p2curScore;
+    static public int p1AmtOfWins;
+    static public int p2AmtOfWins;
+    static public bool gameOver;
 
+    static public int devLevelWinAmnt = 1;
 
+    public static void ResetWinAmt()
+    {
+        p1AmtOfWins = 0;
+        p2AmtOfWins = 0;
+    }
+    public static void ResetScores()
+    {
+        p1curScore = 0;
+        p2curScore = 0;
+    }
 
     // Use this for initialization
     void Start () {

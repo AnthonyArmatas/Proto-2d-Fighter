@@ -24,7 +24,7 @@ public class MenuScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		quitMenu     = quitMenu.GetComponent<Canvas>();
+		quitMenu = quitMenu.GetComponent<Canvas>();
         //I can use just GetComponent to find the script because it is attached to the same game object that MenuScript is
         MNS = GetComponent<MenuNavScript>();
         //I have to use this GameObject.Find to find the name of the game object that QuitMenuNavScript is attached to before I can actually access it. 
@@ -34,7 +34,8 @@ public class MenuScript : MonoBehaviour {
         settingsBut = GameObject.Find("SettingsButton").GetComponent<Button>();
         exitBut     = GameObject.Find("ExitButton").GetComponent<Button>();
         quitMenu.enabled = false;
-;
+        StaticInfoScript.p1AmtOfWins = 0;
+        StaticInfoScript.p2AmtOfWins = 0;
 
     }
 

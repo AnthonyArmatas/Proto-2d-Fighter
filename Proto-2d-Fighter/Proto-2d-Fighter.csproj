@@ -230,6 +230,7 @@
     <Compile Include="Assets\Scripts\CharacterSelectScript.cs" />
     <Compile Include="Assets\Scripts\CharacterSelectVisualScript.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
+    <Compile Include="Assets\Scripts\EndGameMenuScript.cs" />
     <Compile Include="Assets\Scripts\fireCharacterPlayerController.cs" />
     <Compile Include="Assets\Scripts\GameHandlerScript.cs" />
     <Compile Include="Assets\Scripts\genericPlayerController.cs" />

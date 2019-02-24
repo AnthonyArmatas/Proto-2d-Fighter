@@ -44,9 +44,10 @@ public class NodeCollectionScript : MonoBehaviour {
 
 
             DestroyObject(coll.gameObject);
-            Invoke("RespawnNode", 1.5f);            
-
-
+            if(StaticInfoScript.gameOver == false)
+            {
+                Invoke("RespawnNode", 1.5f);
+            }
         }
         /*else if (coll.gameObject.tag == "Slow")
         {
@@ -59,7 +60,9 @@ public class NodeCollectionScript : MonoBehaviour {
 
     private void RespawnNode()
     {
-        Instantiate(Node, new Vector2(0, 0), Quaternion.identity);
+        GameObject spawnedNode = Instantiate(Node, new Vector2(0, 0), Quaternion.identity);
+        spawnedNode.name = Node.name;
+
     }
 
 }

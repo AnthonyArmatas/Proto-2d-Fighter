@@ -61,14 +61,17 @@ public class LevelSelectScript : MonoBehaviour {
         {
             case 1:
                 Debug.Log("Loaded case 1");
+                StaticInfoScript.levelChoiceName = "genLevel";
                 SceneManager.LoadScene("genLevel");
                 break;
             case 2:
                 Debug.Log("Loaded case 2");
+                StaticInfoScript.levelChoiceName = "genLevel";
                 SceneManager.LoadScene("genLevel");
                 break;
             case 3:
                 Debug.Log("Loaded case 3");
+                StaticInfoScript.levelChoiceName = "genLevel";
                 SceneManager.LoadScene("genLevel");
                 break;
             default:

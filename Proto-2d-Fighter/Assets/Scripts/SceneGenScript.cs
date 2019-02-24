@@ -32,6 +32,7 @@ public class SceneGenScript : MonoBehaviour {
         player2 = SetPlayerChar(2);
         Node = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/prefab/Node.prefab");
         Debug.Log("Calling beginCountDown");
+        StaticInfoScript.gameOver = false;
         beginCountDown();
     }
 
