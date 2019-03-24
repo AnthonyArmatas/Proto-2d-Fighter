@@ -223,12 +223,14 @@
     <Compile Include="Assets\Scripts\AnimationScript_IceSpike.cs" />
     <Compile Include="Assets\Scripts\AnimationScript_SubZero.cs" />
     <Compile Include="Assets\Scripts\AttackPoolScript.cs" />
+    <Compile Include="Assets\Scripts\BasePControllerScript.cs" />
     <Compile Include="Assets\Scripts\BlastMovementScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\CharacterPlacementScript.cs" />
     <Compile Include="Assets\Scripts\CharacterSelectContScript.cs" />
     <Compile Include="Assets\Scripts\CharacterSelectScript.cs" />
     <Compile Include="Assets\Scripts\CharacterSelectVisualScript.cs" />
+    <Compile Include="Assets\Scripts\Controller_Dev_Script.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
     <Compile Include="Assets\Scripts\EndGameMenuScript.cs" />
     <Compile Include="Assets\Scripts\fireCharacterPlayerController.cs" />
@@ -238,7 +240,9 @@
     <Compile Include="Assets\Scripts\IceAbilityScript.cs" />
     <Compile Include="Assets\Scripts\IceAttackController.cs" />
     <Compile Include="Assets\Scripts\IceAttacktScript.cs" />
+    <Compile Include="Assets\Scripts\IceCharacterControllerMovementScript.cs" />
     <Compile Include="Assets\Scripts\IceCharacterMovement.cs" />
+    <Compile Include="Assets\Scripts\IceMovementControllerScript.cs" />
     <Compile Include="Assets\Scripts\IceMovementScript.cs" />
     <Compile Include="Assets\Scripts\LevelSelectScript.cs" />
     <Compile Include="Assets\Scripts\LevelSelectVisualScript.cs" />
