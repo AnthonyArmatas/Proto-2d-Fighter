@@ -18,7 +18,8 @@ public class IceCharacterControllerMovementScript : BasePControllerScript
         theRB = GetComponent<Rigidbody2D>();
         tor = GetComponent<Animator>();
         RightThumbStickDir = Vector3.zero;
-        aimsight = GameObject.Find("aimPosition"); IMCS = GetComponent<IceMovementControllerScript>();
+        aimsight = GameObject.Find("aimPosition");
+        IMCS = GetComponent<IceMovementControllerScript>();
     }
 
     // Update is called once per frame
