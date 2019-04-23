@@ -5,8 +5,9 @@ using UnityEngine;
 public class BasePControllerScript : MonoBehaviour {
     // This Script is the equivalant of the PlayerBaseMovement script, but for using a controller instead of a keyboard and mouse
 
-    public float walkSpeed = 2.5f;  //Standard walking speed
-    public float dashSpeed = 5f;    //Standard dashing speed
+    public float curMoveSpeed = 0;
+    public float walkSpeed = 1f;  //Standard walking speed
+    public float dashSpeed = 10f;    //Standard dashing speed
     public float aimAngle = 0;
     public bool dashing = false;    //Is dashing check
     public float jumpForce = 20f;   //Standard jump force 
@@ -46,6 +47,11 @@ public class BasePControllerScript : MonoBehaviour {
     //SET FACING RIGHT AS TRUE FOR FRIST PLAYER IN STATIC START SCRIPT AND FALSE FOR SECOND PLAYER
     public bool facingRight;
 
+    public bool walkRight = false;
+    public bool walkLeft = false;
+    public bool initalDashState = false;
+    public bool shouldJump = false;
+
     // Use this for initialization
     void Start() {
         theRB = GetComponent<Rigidbody2D>();
@@ -55,34 +61,45 @@ public class BasePControllerScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         IsMoving();
         UpdateAim();
     }
 
-    protected void IsMoving()
+    void FixedUpdate()
     {
         preformBaseMovement();
+    }
+
+    protected void IsMoving()
+    {
+        preformBaseMovementLogic();
         sideDashCheck();
         tapTimeCheck();
         jumpCheck();
     }
-    private void preformBaseMovement()
+
+    private void preformBaseMovementLogic()
     {
         secondToLastlStickHorizontal = lastlStickHorizontal;
         lastlStickHorizontal = lStickHorizontal;
         lStickHorizontal = Input.GetAxis("Horizontal");
-        Debug.Log(yRotation);
+        //Debug.Log(yRotation);
 
         if (((lastlStickHorizontal > 0) || (lastlStickHorizontal < 0)) && !dashing)
         {
             if (lastlStickHorizontal > 0)
             {
-                moveRight(walkSpeed, true);
+                walkRight = true;
+                walkLeft = false;
+                tor.SetBool("Walking", true);
             }
             else if (lastlStickHorizontal < 0)
             {
-                moveLeft(walkSpeed, true);
+                walkLeft = true;
+                walkRight = false;
+                tor.SetBool("Walking", true);
             }
         }
         else if (dashing) //Checks to see if the player is/was dashing
@@ -100,39 +117,91 @@ public class BasePControllerScript : MonoBehaviour {
             {
                 if (lastlStickHorizontal > 0)
                 {
-                    moveRight(dashSpeed, false);
+                    walkRight = true;
+                    walkLeft = false;
+                    tor.SetBool("Walking", true);
+                    //moveRight(dashSpeed, false);
                 }
                 else if (lastlStickHorizontal < 0)
                 {
-                    moveLeft(dashSpeed, false);
+                    walkLeft = true;
+                    walkRight = false;
+                    tor.SetBool("Walking", true);
+                    //moveLeft(dashSpeed, false);
                 }
             }
         }
         else
         {
+            walkRight = false;
+            walkLeft = false;
+            initalDashState = false;
             tor.SetBool("Walking", false); //Removes the walking animation
+            curMoveSpeed = 0;
+
         }
+    }
+
+    protected void preformBaseMovement()
+    {
+        moveRight(dashSpeed, false);
+        moveLeft(dashSpeed, false);
+        moveDash(facingRight);
+        jumping(shouldJump);
+
     }
 
     public void moveRight(float moveSpeed, bool walking)
     {
-        theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);  //Makes the player walk right
-        transform.localRotation = Quaternion.Euler(0, 0, 0);        //Rotates a players model right
-        facingRight = true;                                         //Sets the facing right bool to true;
-        if (walking)
+        if (walkRight)
         {
-            tor.SetBool("Walking", true);                               //Sets the players walking animation
+            //theRB.velocity = new Vector2(moveSpeed, theRB.velocity.y);  //Makes the player walk right
+            //Below makes the player walk right BUT It does it by progrissivly applying force
+            //This addition of force over time helps make the transition from blasting and using other
+            //Physics manipulations and walking smoother
+            //The if Statment will increase the curMoveSpeed and then check it, if it is above dashSpeed it will drop it to equal dashSpeed
+            if ((curMoveSpeed += moveSpeed) > dashSpeed)
+            {
+                curMoveSpeed = dashSpeed;
+            }
+            if (theRB.velocity.magnitude < dashSpeed)
+            {
+                theRB.AddForce(new Vector2(curMoveSpeed, theRB.velocity.y));
+            }
+            //Debug.Log(theRB.velocity);
+
+
+            transform.localRotation = Quaternion.Euler(0, 0, 0);        //Rotates a players model right
+            facingRight = true;                                         //Sets the facing right bool to true;
+
         }
+
     }
     public void moveLeft(float moveSpeed, bool walking)
     {
-        theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
-        transform.localRotation = Quaternion.Euler(0, 180, 0);
-        facingRight = false;
-        if (walking)
+        if (walkLeft)
         {
-            tor.SetBool("Walking", true);                               //Sets the players walking animation
+            //theRB.velocity = new Vector2(-moveSpeed, theRB.velocity.y);
+            //Below makes the player walk right BUT It does it by progrissivly applying force
+            //This addition of force over time helps make the transition from blasting and using other
+            //Physics manipulations and walking smoother
+            //The if Statment will increase the curMoveSpeed and then check it, if it is above dashSpeed it will drop it to equal dashSpeed
+            if ((curMoveSpeed += moveSpeed) > dashSpeed)
+            {
+                curMoveSpeed = dashSpeed;
+            }
+            if (theRB.velocity.magnitude < dashSpeed)
+            {
+                theRB.AddForce(new Vector2(-curMoveSpeed, theRB.velocity.y));
+            }
+            //Debug.Log(theRB.velocity);
+
+
+            transform.localRotation = Quaternion.Euler(0, 180, 0);
+            facingRight = false;
+
         }
+
     }
 
     private void sideDashCheck()
@@ -185,34 +254,97 @@ public class BasePControllerScript : MonoBehaviour {
     }
     private void withinTapTime(ref int pushTotal, ref double timeDelay, bool direction)
     {
+        //DASHING SCRIPT
         if ((pushTotal == 2) && (timeDelay < .5)) //If its withinh the time limit and the player taps the key a second time, increase the speed and set dash to true
         {
-            if (direction)
-            {
-                theRB.velocity = new Vector2(dashSpeed, theRB.velocity.y);
+            //Moved to fixed update call in the new moveDash() function
 
-            }
-            else
-            {
-                theRB.velocity = new Vector2(-dashSpeed, theRB.velocity.y);
-            }
+            //if (direction)
+            //{
+            //    //theRB.velocity = new Vector2(dashSpeed, theRB.velocity.y);
+            //    if (theRB.velocity.magnitude < dashSpeed)
+            //    {
+            //        theRB.AddForce(new Vector2(dashSpeed, theRB.velocity.y));
+            //        curMoveSpeed = dashSpeed;
+            //    }
+            //    //Debug.Log(theRB.velocity);
+            //}
+            //else
+            //{
+            //    //theRB.velocity = new Vector2(-dashSpeed, theRB.velocity.y);
+            //    if (theRB.velocity.magnitude < dashSpeed)
+            //    {
+            //        theRB.AddForce(new Vector2(dashSpeed, theRB.velocity.y));
+            //        curMoveSpeed = dashSpeed;
+            //    }
+            //}
 
             dashing = true;
         }
     }
+    private void moveDash(bool direction)
+    {
+        if (dashing)
+        {
+            
+            if (direction)
+            {
+                if (initalDashState == false)
+                {
+                    // I am adding this non addforce change to theRB to get it instantly up to speed just once
+                    theRB.velocity = new Vector2(dashSpeed, theRB.velocity.y);
+                    initalDashState = true;
+                }
+                //theRB.velocity = new Vector2(dashSpeed, theRB.velocity.y);
+                if (theRB.velocity.magnitude < dashSpeed)
+                {
+                    theRB.AddForce(new Vector2(dashSpeed, theRB.velocity.y));
+                    curMoveSpeed = dashSpeed;
+                }
+                //Debug.Log(theRB.velocity);
+            }
+            else
+            {
+                if (initalDashState == false)
+                {
+                    theRB.velocity = new Vector2(-dashSpeed, theRB.velocity.y);
+                    initalDashState = true;
+                }
+                //theRB.velocity = new Vector2(-dashSpeed, theRB.velocity.y);
+                if (theRB.velocity.magnitude < dashSpeed)
+                {
+                    theRB.AddForce(new Vector2(-dashSpeed, theRB.velocity.y));
+                    curMoveSpeed = dashSpeed;
+                }
+            }
+        }
 
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // CAN ONLY JUMP ONCE FIGURE OUT WHY THE CUR JUMP CODE DOESNT WORK ANYMORE
+    //////////////////////////////////////////////////////////////////////////////////////////
     private void jumpCheck()
     {
-        if (Input.GetKeyDown(jump)) //Checks for jump inputs
+        if (Input.GetKey(jump)) //Checks for jump inputs
         {
             if (curJumps < maxJumps) //if the character has not already reached its max jump limit, jump and inc.
             {
-                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+                shouldJump = true;
                 curJumps++;
             }
 
         }
     }
+    private void jumping(bool jumpCheck)
+    {
+        if (jumpCheck)
+        {
+            theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+            shouldJump = false;
+
+        }
+    }
+
 
     protected void UpdateAim()
     {
@@ -229,7 +361,7 @@ public class BasePControllerScript : MonoBehaviour {
             aimAngle = 360 - aimAngle;
         }
 
-        Debug.Log(aimsight.transform.GetChild(0).transform.rotation.eulerAngles);
+        //Debug.Log(aimsight.transform.GetChild(0).transform.rotation.eulerAngles);
         if (facingRight == true)
         {
             aimsight.transform.localEulerAngles = new Vector3(0f, 0f, aimAngle);

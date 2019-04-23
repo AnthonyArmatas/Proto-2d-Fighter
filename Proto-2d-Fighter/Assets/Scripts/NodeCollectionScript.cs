@@ -54,7 +54,9 @@ public class NodeCollectionScript : MonoBehaviour {
 
         }*/
         else
-            Debug.Log(gameObject.tag);
+        {
+            //Debug.Log(gameObject.tag);
+        }
 
     }
 

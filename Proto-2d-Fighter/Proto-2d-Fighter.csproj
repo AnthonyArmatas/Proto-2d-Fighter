@@ -225,6 +225,7 @@
     <Compile Include="Assets\Scripts\AttackPoolScript.cs" />
     <Compile Include="Assets\Scripts\BasePControllerScript.cs" />
     <Compile Include="Assets\Scripts\BlastCharacterControllerMovementScript.cs" />
+    <Compile Include="Assets\Scripts\BlastMovementControllerScript.cs" />
     <Compile Include="Assets\Scripts\BlastMovementScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\CharacterPlacementScript.cs" />

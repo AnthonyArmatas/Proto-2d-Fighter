@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 4749694}
   - component: {fileID: 4749693}
   - component: {fileID: 4749692}
+  - component: {fileID: 4749702}
   m_Layer: 0
   m_Name: Blaster_Controller_Version_.02
   m_TagString: Player
@@ -162,8 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8320dc0c3f63564a86cfe0058cd6466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2.5
-  dashSpeed: 5
+  curMoveSpeed: 0
+  walkSpeed: 1
+  dashSpeed: 10
   aimAngle: 0
   dashing: 0
   jumpForce: 20
@@ -185,6 +187,10 @@ MonoBehaviour:
   lStickHorizontal: 0
   RightThumbStickDir: {x: 0, y: 0, z: 0}
   facingRight: 0
+  walkRight: 0
+  walkLeft: 0
+  initalDashState: 0
+  shouldJump: 0
   movementKey: 335
   fullFuelGage: 4
   curFuelGage: 0
@@ -194,6 +200,7 @@ MonoBehaviour:
   blastPoint: {fileID: 0}
   blastPointRGB: {fileID: 0}
   apRGB: {fileID: 0}
+  BMCS: {fileID: 0}
 --- !u!114 &4749694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +363,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4749702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 4749691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4f2bdd51a3969445bf261efc1199193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charging: 0
+  exploding: 0
+  chargeTime: 0
 --- !u!1 &31001226
 GameObject:
   m_ObjectHideFlags: 0
