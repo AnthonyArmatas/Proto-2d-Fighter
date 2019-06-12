@@ -259,6 +259,7 @@
     <Compile Include="Assets\Scripts\QuitMenuNavScript.cs" />
     <Compile Include="Assets\Scripts\Retired_Scripts\IceMageControllerScript.cs" />
     <Compile Include="Assets\Scripts\Retired_Scripts\IceSpikeControllerScript.cs" />
+    <Compile Include="Assets\Scripts\ScaleShrink.cs" />
     <Compile Include="Assets\Scripts\SceneGenScript.cs" />
     <Compile Include="Assets\Scripts\ScoreScript.cs" />
     <Compile Include="Assets\Scripts\SelectionScript.cs" />

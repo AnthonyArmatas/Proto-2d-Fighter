@@ -325,7 +325,8 @@ public class BasePControllerScript : MonoBehaviour {
     //////////////////////////////////////////////////////////////////////////////////////////
     private void jumpCheck()
     {
-        if (Input.GetKey(jump)) //Checks for jump inputs
+        // Input.GetKey(jump)) makes the character bounce, and has an interesting interaction with the blast. Keep in mind for later
+        if (Input.GetKeyDown(jump)) //Checks for jump inputs
         {
             if (curJumps < maxJumps) //if the character has not already reached its max jump limit, jump and inc.
             {

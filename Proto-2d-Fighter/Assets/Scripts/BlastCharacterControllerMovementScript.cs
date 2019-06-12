@@ -6,8 +6,9 @@ public class BlastCharacterControllerMovementScript : BasePControllerScript
 {
     public KeyCode movementKey;
 
-    public int fullFuelGage = 4;
-    public int curFuelGage;
+    // fullFuelGage = 100
+    public int fullFuelGage;
+    public int curFuelGage = 10;
 
     public bool movAbltyEnabled = false;   
     public bool charging = false;
@@ -15,6 +16,10 @@ public class BlastCharacterControllerMovementScript : BasePControllerScript
     public GameObject blastPoint;
     public Rigidbody2D blastPointRGB;
     public Rigidbody2D apRGB;
+    public SpriteRenderer fGuage;
+
+    public double tSinceLastReFuel;
+    public double tSinceLastBlast;
 
     public BlastMovementControllerScript BMCS;
 
@@ -30,12 +35,14 @@ public class BlastCharacterControllerMovementScript : BasePControllerScript
         apRGB = GameObject.Find("aimPosition").GetComponent<Rigidbody2D>();
         blastPointRGB = GameObject.Find("AttackSpawn").GetComponent<Rigidbody2D>();
         BMCS = GetComponent<BlastMovementControllerScript>();
+        fGuage = GameObject.Find("CurFuel").GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         UpdateAim();
         IsUsingSpecialMovement();
+        
     }
     void IsUsingSpecialMovement()
     {
@@ -45,7 +52,7 @@ public class BlastCharacterControllerMovementScript : BasePControllerScript
         }
         
         
-        BMCS.Blasting(theRB, movementKey);
+        BMCS.Blasting(theRB, movementKey, ref curFuelGage, fGuage);
         
         //if (Input.GetKey(movementKey))
         //{
@@ -60,27 +67,62 @@ public class BlastCharacterControllerMovementScript : BasePControllerScript
     }
     private void FixedUpdate ()
     {
-        BMCS.blast(theRB, blastPoint);
+        BMCS.blast(theRB, blastPoint, ref tSinceLastBlast);
         preformBaseMovement();
+        RegenerateFuel();
     }
 
-    //private void blast()
-    //{
-    //    if(exploding == true)
-    //    {
-    //        //I just subtracted the world position of the blastpint from the blaster character to get the position of the thrust and then I modified the power by multiplication.
-    //        theRB.AddForce(new Vector2((theRB.position.x - blastPoint.transform.position.x)* 2f, (theRB.position.y - blastPoint.transform.position.y) * 2f), ForceMode2D.Impulse);
-    //        exploding = false;
-    //    }
-    //    //theRB.AddForceAtPosition(new Vector2(blastPoint.transform.localPosition.x + 5, blastPoint.transform.localPosition.y + 5),new Vector2(blastPoint.transform.localPosition.x, blastPoint.transform.localPosition.y));
-    //    //theRB.velocity = new Vector2(jumpForce, jumpForce);
-    //    float thrust = 20.0f;
-    //    //transform.position = new Vector3(0.0f, -2.0f, 0.0f);
-    //    //apRGB.AddForce(transform.up * thrust);
-    //    //theRB.AddForceAtPosition(new Vector2(theRB.velocity.x, 20f), apRGB.position);
-    //    //theRB.velocity = transform.forward * thrust;
-    //    //theRB.AddForceAtPosition(blastPoint.transform.forward * thrust, blastPoint.transform.forward);
-    //    Debug.Log("Blasted");
+    private void RegenerateFuel()
+    {
+        if(curFuelGage != 10)
+        {
+            if(tSinceLastReFuel >= 1 && tSinceLastBlast > 1)
+            {
+                tSinceLastReFuel = Time.deltaTime;
+                UpdateReFuelGage(1f);
+                curFuelGage += 1;
+                if(curFuelGage > 10)
+                {
+                    curFuelGage = 10;
+                }
+                UpdateReFuelColor();
+                return;
+            }
+            else
+            {
+                tSinceLastReFuel += Time.deltaTime;
+            }
+        }
 
-    //}
+         
+    }
+    public void UpdateReFuelGage(float refillAmt)
+    {
+        if (curFuelGage < 10)
+        {
+            if ((refillAmt + curFuelGage) >= 10)
+            {
+                fGuage.transform.localScale = new Vector3(fGuage.transform.localScale.x, 1, fGuage.transform.localScale.z);
+            }
+            else
+            {
+                fGuage.transform.localScale = new Vector3(fGuage.transform.localScale.x, ((refillAmt + curFuelGage) / 10f), fGuage.transform.localScale.z);
+            }
+
+        }
+    }
+
+    public void UpdateReFuelColor()
+    {
+        //Below gets the color.g which is a decimal number effectivly making it 255 or its equiv
+        // Then the passed in num (usually 1) multiplied by 25.5 (225 /10 is 25.5 so  1/10th)
+        //Then take that number and divide it by 255 to get the decimal for the new color
+        //float curCologG = fGuage.color.g * 255;
+        //curCologG = curCologG + ((refillAmt) * 25.5);
+        //fGuage.color = new Color(1, curCologG / 255, 0);
+
+        float curCologG = ((float)curFuelGage * 25.5f) / 255;
+        fGuage.color = new Color(1, curCologG, 0);
+
+    }
 }
