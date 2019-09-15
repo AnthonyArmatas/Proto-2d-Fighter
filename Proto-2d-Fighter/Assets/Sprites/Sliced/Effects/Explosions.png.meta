@@ -1,0 +1,265 @@
+fileFormatVersion: 2
+guid: 0bd592e5d5275464986cfede25570c31
+timeCreated: 1566691457
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Explosions_0
+    21300002: Explosions_1
+    21300004: Explosions_2
+    21300006: Explosions_3
+    21300008: Explosions_4
+    21300010: Explosions_5
+    21300012: Explosions_6
+    21300014: Explosions_7
+    21300016: Explosions_8
+    21300018: Explosions_9
+    21300020: Explosions_10
+    21300022: Explosions_11
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Explosions_0
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 982
+        width: 15
+        height: 15
+      alignment: 9
+      pivot: {x: 0.05499471, y: 0.47775066}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_1
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 879
+        width: 51
+        height: 53
+      alignment: 9
+      pivot: {x: 0.009185342, y: 0.48790008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_2
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 724
+        width: 63
+        height: 65
+      alignment: 9
+      pivot: {x: 0.0003790477, y: 0.49484864}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_3
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 628
+        width: 63
+        height: 63
+      alignment: 9
+      pivot: {x: 0.0056225006, y: 0.4967264}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_4
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 511
+        width: 78
+        height: 76
+      alignment: 9
+      pivot: {x: -0.0024466566, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_5
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 385
+        width: 80
+        height: 82
+      alignment: 9
+      pivot: {x: -0.0032733916, y: 0.49604017}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_6
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 248
+        width: 83
+        height: 80
+      alignment: 9
+      pivot: {x: 0.0072102374, y: 0.49376488}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_7
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 154
+        width: 82
+        height: 77
+      alignment: 9
+      pivot: {x: -0.00055527105, y: 0.50527793}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_8
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 64
+        width: 81
+        height: 73
+      alignment: 9
+      pivot: {x: 0.0030992297, y: 0.5000003}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_9
+      rect:
+        serializedVersion: 2
+        x: 886
+        y: 813
+        width: 80
+        height: 67
+      alignment: 9
+      pivot: {x: 0.0005096436, y: 0.48612952}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_10
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 710
+        width: 79
+        height: 64
+      alignment: 9
+      pivot: {x: 0.0020288394, y: 0.5048399}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Explosions_11
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 604
+        width: 79
+        height: 62
+      alignment: 9
+      pivot: {x: 0.0020288394, y: 0.49500397}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

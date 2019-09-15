@@ -27,8 +27,11 @@ public class BasePControllerScript : MonoBehaviour {
     private float slowTime = 0.5f;
 
     public Rigidbody2D theRB;
-    public Animator tor;
     public GameObject aimsight;
+    public Animator tor;
+    //protected string curAnimation = "";
+    //protected string animationToPref = "";
+
 
     public AimController AC;
     public HealthScript hs;
@@ -52,6 +55,19 @@ public class BasePControllerScript : MonoBehaviour {
     public bool initalDashState = false;
     public bool shouldJump = false;
 
+
+    /// <summary>
+    /// Working on getting the jumping animation for blast to work on y velosity increasing and 
+    /// when jump is set to true, and the fall when y is negative. Idk about the xaxis when running.
+    /// I am using this as a jumping off point. https://answers.unity.com/questions/1393229/how-can-i-detect-if-an-object-is-accelerating-or-d.html
+    /// if it doesnt work then maybe use the usual animation way to get the jump and fall animations to work
+    /// 
+    /// </summary>
+
+    protected Vector3 lastPositionY;
+    protected Vector3 lastVelocityY;
+    protected Vector3 lastAccelerationY;
+
     // Use this for initialization
     void Start() {
         theRB = GetComponent<Rigidbody2D>();
@@ -70,6 +86,11 @@ public class BasePControllerScript : MonoBehaviour {
     void FixedUpdate()
     {
         preformBaseMovement();
+    }
+
+    private void LateUpdate()
+    {
+        //if(theRB.transform.position.x.)
     }
 
     protected void IsMoving()
@@ -347,12 +368,14 @@ public class BasePControllerScript : MonoBehaviour {
     }
 
 
-    protected void UpdateAim()
+    protected virtual void UpdateAim()
     {
         RightThumbStickDir.y = Input.GetAxis("RightThumbStickVert") * 100;
         RightThumbStickDir.x = Input.GetAxis("RightThumbStickHor") * 100;
 
+
         aimAngle = Mathf.Atan2((Input.GetAxis("RightThumbStickVert")), Input.GetAxis("RightThumbStickHor")) * Mathf.Rad2Deg;
+
         if (aimAngle < 0)
         {
             aimAngle = aimAngle * -1;
@@ -362,7 +385,6 @@ public class BasePControllerScript : MonoBehaviour {
             aimAngle = 360 - aimAngle;
         }
 
-        //Debug.Log(aimsight.transform.GetChild(0).transform.rotation.eulerAngles);
         if (facingRight == true)
         {
             aimsight.transform.localEulerAngles = new Vector3(0f, 0f, aimAngle);

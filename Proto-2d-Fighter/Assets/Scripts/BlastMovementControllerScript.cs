@@ -65,11 +65,12 @@ public class BlastMovementControllerScript : MonoBehaviour {
     }
 	
 
-    public void blast(Rigidbody2D theRB, GameObject blastPoint, ref double tSinceLastBlast)
+    public void blast(Rigidbody2D theRB, GameObject blastPoint, Animator blastAnimaton, ref double tSinceLastBlast)
     {
 
         if (exploding == true)
         {
+            blastAnimaton.SetTrigger("Blast");
             //I just subtracted the world position of the blastpint from the blaster character to get the position of the thrust and then I modified the power by multiplication.
             theRB.AddForce(new Vector2((theRB.position.x - blastPoint.transform.position.x) * BlastPower, (theRB.position.y - blastPoint.transform.position.y) * BlastPower), ForceMode2D.Impulse);
             exploding = false;

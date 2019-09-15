@@ -224,6 +224,7 @@
     <Compile Include="Assets\Scripts\AnimationScript_SubZero.cs" />
     <Compile Include="Assets\Scripts\AttackPoolScript.cs" />
     <Compile Include="Assets\Scripts\BasePControllerScript.cs" />
+    <Compile Include="Assets\Scripts\BlastAnimationScript.cs" />
     <Compile Include="Assets\Scripts\BlastCharacterControllerMovementScript.cs" />
     <Compile Include="Assets\Scripts\BlastMovementControllerScript.cs" />
     <Compile Include="Assets\Scripts\BlastMovementScript.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Assets\Scripts\CharacterSelectVisualScript.cs" />
     <Compile Include="Assets\Scripts\Controller_Dev_Script.cs" />
     <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
+    <Compile Include="Assets\Scripts\EffectReactionScript.cs" />
     <Compile Include="Assets\Scripts\EndGameMenuScript.cs" />
     <Compile Include="Assets\Scripts\fireCharacterPlayerController.cs" />
     <Compile Include="Assets\Scripts\GameHandlerScript.cs" />

@@ -9,6 +9,7 @@ TagManager:
   - Attack
   - Terrain
   - Node
+  - Blast
   layers:
   - Default
   - TransparentFX
